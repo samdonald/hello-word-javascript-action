@@ -2,6 +2,7 @@ const core = require("@actions/core");
 const github = require("@actions/github");
 
 try {
+  console.log("Action triggered");
   const nameToGreet = core.getInput("who-to-greet");
   console.log(`Hello ${nameToGreet} (${github.context.actor})`);
   const time = (new Date()).toTimeString();

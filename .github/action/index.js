@@ -6,8 +6,7 @@ try {
   const octokit = github.getOctokit(process.env.GITHUB_TOKEN)
 
   console.log(body.indexOf("## Project Title", 0))
-  console.log(JSON.stringify(body), JSON.parse(body));
-  
+  console.log(body)  
   octokit.issues.createComment({
     owner: github.context.payload.sender.login,
     repo: github.context.payload.repository.name,

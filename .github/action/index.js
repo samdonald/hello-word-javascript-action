@@ -7,7 +7,9 @@ try {
   const octokit = new GitHub(github.token);
   console.log(`Hi ${github.context.actor}`);
   console.log(payload)
-  octokit.issues.getComment(github.context.payload.comment.id).then(val => console.log(`comment value`, val)).catch(err => log(err))
+  octokit.issues.getComment(github.context.payload.comment.id)
+    .then(val => console.log(`comment value`, val))
+    .catch(err => console.log(err))
 
 } catch (error) {
   core.setFailed(error.message);

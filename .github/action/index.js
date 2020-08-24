@@ -7,7 +7,12 @@ try {
   const octokit = new GitHub(github.token);
   console.log(`Hi ${github.context.actor}`);
   console.log(payload)
-  octokit.issues.createComment({"body": "Hi", "issue_number": 2})
+  octokit.issues.createComment({ 
+    "owner":"mudlabs",
+    "body": "Hi", 
+    "issue_number": 2,
+    "repo": "NativeScript-Play-Pit"
+  })
     .then(val => console.log(`comment value`, val))
     .catch(err => console.log(err))
 

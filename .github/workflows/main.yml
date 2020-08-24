@@ -8,6 +8,7 @@ jobs:
       - uses: actions/checkout@v1
       - name: Reply action
         id: reply
+        if: ${{ github.context.payload.body == "Hello" }}
         uses: ./.github/action
   # hello_world_job:
   #   runs-on: ubuntu-latest

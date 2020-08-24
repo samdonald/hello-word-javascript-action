@@ -4,17 +4,18 @@ const { GitHub } = require("@actions/github/lib/utils");
 
 try {
   const payload = JSON.stringify(github.context.payload, undefined, 2);
-  const octokit = new GitHub(github.token);
   console.log(`Hi ${github.context.actor}`);
   console.log(payload)
-  octokit.issues.createComment({ 
-    "owner":"mudlabs",
-    "body": "Hi", 
-    "issue_number": 2,
-    "repo": "NativeScript-Play-Pit"
-  })
-    .then(val => console.log(`comment value`, val))
-    .catch(err => console.log(err))
+
+  const octokit = new GitHub(process.env.GITHUB_TOKEN);
+  octokit.issues.createComment({
+    owner: github.context.payload.sender.login,
+    repo: github.context.payload.repository.name,
+    issue_number: github.context.payload.issue.number,
+    body: "Hi there" 
+  }).then(({data, headers, status}) => console.log(status, data))
+    .catch(error => console.log(error))
+  
 
 } catch (error) {
   core.setFailed(error.message);

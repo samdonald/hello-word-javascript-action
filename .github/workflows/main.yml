@@ -1,4 +1,7 @@
-on: [issue_comment]
+on: 
+  issues:
+    types:
+      - opened
 
 jobs:
   world:

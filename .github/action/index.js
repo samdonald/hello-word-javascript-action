@@ -4,7 +4,7 @@ const github = require("@actions/github");
 try {
   const payload = JSON.stringify(github.context.payload, undefined, 2);
   console.log(`Hi ${github.context.actor}`);
-  console.log(payload)
+  console.log(github.context.payload.issue.body)
 
   const octokit = github.getOctokit(process.env.GITHUB_TOKEN)
   octokit.issues.createComment({

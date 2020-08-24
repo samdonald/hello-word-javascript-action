@@ -3,6 +3,7 @@ on: [issue_comment]
 jobs:
   world:
     runs-on: ubuntu-latest
+    if: startsWith(github.event.issue.title, '[project]')
     name: Reply
     steps:
       - uses: actions/checkout@v1

@@ -5,13 +5,23 @@ try {
   const body = github.context.payload.issue.body
   const octokit = github.getOctokit(process.env.GITHUB_TOKEN)
 
-  console.log(body.indexOf("## Project Title", 0))
-  console.log(body)  
+  const owner = github.context.payload.repository.owner.login;
+  const repo = github.context.payload.repository.name;
+  const issue_number = github.context.payload.issue.number;
+  const contributor = github.context.payload.sender.login;
+
+  octokit.issues.update({ 
+    owner,
+    repo,
+    issue_number,
+    title: `[project] Arrow Bone by @${contributor}`
+  })
+  
   octokit.issues.createComment({
-    owner: github.context.payload.sender.login,
-    repo: github.context.payload.repository.name,
-    issue_number: github.context.payload.issue.number,
-    body: "Hi there" 
+    owner,
+    repo,
+    issue_number,
+    body: `@${contributor} Thanks for contributing!` 
   }).then(({data, headers, status}) => console.log(status, data))
   
 } catch (error) {

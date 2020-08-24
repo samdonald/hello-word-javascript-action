@@ -1,10 +1,6 @@
 const core = require("@actions/core");
 const github = require("@actions/github");
 
-function getProjectTitle(body) {
-
-  return title;
-}
 
 try {
   const body = github.context.payload.issue.body
@@ -15,7 +11,6 @@ try {
   const issue_number = github.context.payload.issue.number;
   const contributor = github.context.payload.sender.login;
   
-  const project_title = getProjectTitle(body);
 
 
   octokit.issues.createComment({

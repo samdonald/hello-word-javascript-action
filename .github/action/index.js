@@ -17,24 +17,22 @@ try {
   
   const project_title = getProjectTitle(body);
 
-  
 
   octokit.issues.createComment({
     owner,
     repo,
     issue_number,
     body: `@${contributor} Thanks for contributing!` 
-  }).then(({data, headers, status}) => {
-    console.log(status, data)
-    octokit.issues.update({ 
+  })
+    .then(({data, headers, status}) => console.log(status, data))
+    .then(() => octokit.issues.update({
       owner,
       repo,
       issue_number,
-      title: `[project] ${project_title} by @${contributor}`,
+      assignees: [owner],
       labels: ["new project"],
-      assignees: [owner]
-    })
-  })
+      title: `[project] Bone Saw by @${contributor}`
+    }))
   
 } catch (error) {
   core.setFailed(error.message);

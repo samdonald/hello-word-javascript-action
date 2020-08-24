@@ -7,7 +7,7 @@ try {
   const octokit = new GitHub(github.token);
   console.log(`Hi ${github.context.actor}`);
   console.log(payload)
-  octokit.issues.getComment(github.context.payload.comment.id)
+  octokit.issues.createComment({"body": "Hi", "issue_number": 2})
     .then(val => console.log(`comment value`, val))
     .catch(err => console.log(err))
 

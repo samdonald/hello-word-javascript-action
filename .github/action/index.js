@@ -1,13 +1,12 @@
 const core = require("@actions/core");
 const github = require("@actions/github");
-const { GitHub } = require("@actions/github/lib/utils");
 
 try {
   const payload = JSON.stringify(github.context.payload, undefined, 2);
   console.log(`Hi ${github.context.actor}`);
   console.log(payload)
 
-  const octokit = new GitHub(process.env.GITHUB_TOKEN);
+  const octokit = github.getOctokit(process.env.GITHUB_TOKEN)
   octokit.issues.createComment({
     owner: github.context.payload.sender.login,
     repo: github.context.payload.repository.name,

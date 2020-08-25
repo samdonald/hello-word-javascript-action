@@ -3,7 +3,7 @@ const github = require("@actions/github");
 
 
 function parseTitle(body) {
-  const projectTitle = "## Project Title\n"
+  const projectTitle = "## Project Title"
   const titleIndex = body.indexOf(projectTitle) + projectTitle.length;
   const platformsIndex = body.indexOf("<!-- Please indecate")
   let title = body.substring(titleIndex, platformsIndex).trim();

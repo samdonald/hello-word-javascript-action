@@ -3,9 +3,9 @@ const github = require("@actions/github");
 
 
 function parseTitle(body) {
-  const projectTitle = "## Project Title"
+  const projectTitle = "## Project Title";
   const titleIndex = body.indexOf(projectTitle) + projectTitle.length;
-  const platformsIndex = body.indexOf("<!-- Please indecate")
+  const platformsIndex = body.indexOf("<!-- Please indecate");
   let title = body.substring(titleIndex, platformsIndex).trim();
   console.log(`
     ${titleIndex}
@@ -14,12 +14,9 @@ function parseTitle(body) {
     ${body.slice(titleIndex, platformsIndex)}
     ${title.charAt(0)}
     ${title.startsWith("-")}
-  `)
-  return title;
-  if (title.startsWith("-")) title = title.slice(1).trim();
-  if (title.split(" ").length > 1) return title;
-
-  throw Error("Invalid Title");
+  `);
+  if (title.startsWith("-")) { title = title.slice(0,1).trim(); }
+  return title;  
 }
 
 async function buildProject() {

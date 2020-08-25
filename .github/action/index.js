@@ -18,7 +18,7 @@ async function buildProject() {
   try {
     const octokit = github.getOctokit(process.env.GITHUB_TOKEN)
     const contributor = github.context.payload.sender.login
-    const body = github.context.payload.body;
+    const body = github.context.payload.issue.body;
     const owner = github.context.payload.repository.owner.login;
     const repo = github.context.payload.repository.name;
     const issue_number = github.context.payload.issue.number;

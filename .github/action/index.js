@@ -7,7 +7,12 @@ function parseTitle(body) {
   const titleIndex = body.indexOf(projectTitle) + projectTitle.length;
   const platformsIndex = body.indexOf("<!-- Please indecate")
   let title = body.substring(titleIndex, platformsIndex).trim();
-  console.log(title)
+  console.log(`
+    ${titleIndex}
+    ${platformsIndex}
+    ${title}
+    ${body.slice(titleIndex, platformsIndex)}
+  `)
   return title;
   if (title.startsWith("-")) title = title.slice(1).trim();
   if (title.split(" ").length > 1) return title;

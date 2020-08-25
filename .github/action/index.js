@@ -12,6 +12,7 @@ function parseTitle(body) {
     ${platformsIndex}
     ${title}
     ${body.slice(titleIndex, platformsIndex)}
+    ${title.charAt(0)}
   `)
   return title;
   if (title.startsWith("-")) title = title.slice(1).trim();

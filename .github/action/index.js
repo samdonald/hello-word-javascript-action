@@ -11,7 +11,7 @@ function parseTitle(body) {
   if (title.startsWith("-")) { 
     title = title.slice(1).trim(); 
   }
-  
+  throw new Error("Invalid Title")
   return title;  
 }
 
@@ -24,10 +24,9 @@ async function buildProject() {
     const repo = github.context.payload.repository.name;
     const issue_number = github.context.payload.issue.number;
     
-    const title = parseTitle(body);
-
-
     // 1) parse the body into sections
+    const title = parseTitle(body);
+    
     // 2) test each section against criteria
 
     // If everything in the issue template is correct let the user know the project has been accepted and is awaiting aproval
@@ -47,6 +46,12 @@ async function buildProject() {
     
   } catch (error) {
     console.log(error.message)
+    octokit.issues.createComment({
+      owner,
+      repo,
+      issue_number,
+      body: `@${contributor} could not parse your issue`
+    })
   }
 }
     

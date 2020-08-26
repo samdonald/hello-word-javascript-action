@@ -15,7 +15,7 @@ function parseTitle(body) {
     ${title.charAt(0)}
     ${title.startsWith("-")}
   `);
-  if (title.startsWith("-")) { title = title.slice(0,1).trim(); }
+  if (title.startsWith("-")) { title = title.slice(1).trim(); }
   return title;  
 }
 

@@ -11,12 +11,13 @@ function parseTitle(body) {
   if (title.startsWith("-")) { 
     title = title.slice(1).trim(); 
   }
-  throw new Error("Invalid Title")
   return title;  
 }
 
 async function buildProject() {
   try {
+    console.log(github.context.payload);
+    return;
     const octokit = github.getOctokit(process.env.GITHUB_TOKEN)
     const contributor = github.context.payload.sender.login
     const body = github.context.payload.issue.body;
@@ -46,12 +47,6 @@ async function buildProject() {
     
   } catch (error) {
     console.log(error.message)
-    octokit.issues.createComment({
-      owner,
-      repo,
-      issue_number,
-      body: `@${contributor} could not parse your issue`
-    })
   }
 }
     

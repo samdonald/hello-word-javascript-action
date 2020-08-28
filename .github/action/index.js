@@ -26,7 +26,7 @@ try {
       return title;
     }
 
-    throw new Error("Invalid Title");
+    // throw new Error("Invalid Title");
   }
 
   (async function buildProject(body) {

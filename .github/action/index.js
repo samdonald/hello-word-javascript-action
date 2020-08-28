@@ -1,12 +1,33 @@
 const core = require("@actions/core");
 const github = require("@actions/github");
+const fs = require("fs");
+
+const octokit = github.getOctokit(process.env.GITHUB_TOKEN);
+const owner = github.context.payload.repository.owner.login;
+const issue_number = github.context.payload.issue.number;
+const repo = github.context.payload.repository.name;
+
+async function parseComment() {
+  try {
+    // const file = ;
+    // get working issue from metadata from file
+    // if sender is same as issue creator pay attention, else don't.
+    if (github.context.payload.sender.login !== File.issue.contributor) {
+      throw new Error("Invalid Contributor");
+    } else {
+      // 1. identify if a comment from the contributor was requested
+      // 1.1. does this comment follow the requested comment.
+      // 2. id what type of content to look for.
+      // 3. parse comment for content
+      // 4. update project content if found or reply to contributor that the information could not be found.
+    }
+  } catch (error) {
+    console.log(error.message)
+  }
+}
 
 try {
-  const octokit = github.getOctokit(process.env.GITHUB_TOKEN);
   const contributor = github.context.payload.sender.login;
-  const owner = github.context.payload.repository.owner.login;
-  const repo = github.context.payload.repository.name;
-  const issue_number = github.context.payload.issue.number;
   const body = github.context.payload.issue.body;
 
   const createComment = (body) => octokit.issues.createComment({
@@ -29,10 +50,19 @@ try {
     throw new Error("Invalid Title");
   }
 
+  switch (github.context.action) {
+    case "opened":
+      buildProject(body);
+      break;
+    case "created":
+      parseComment();
+      break;
+  }
+
   (async function buildProject(body) {
     try {
+      fs.writeFile("projects.md", "## Project Title\r\nMy Title :smile:");
       // determin what event triggered the action
-      console.log(github.context)
       const title = parseTitle(body);
       // const ios = parseIos(body);
       // const android = parseAndroid(body);

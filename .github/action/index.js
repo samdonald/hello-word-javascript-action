@@ -1,24 +1,24 @@
 const core = require("@actions/core");
 const github = require("@actions/github");
 
+const octokit = github.getOctokit(process.env.GITHUB_TOKEN)
 
 function parseTitle(body) {
   const projectTitle = "## Project Title";
   const titleIndex = body.indexOf(projectTitle) + projectTitle.length;
-  const platformsIndex = body.indexOf("<!-- Please indecate");
+  const platformsIndex = body.indexOf("## Platform Support");
   let title = body.substring(titleIndex, platformsIndex).trim();
-  
-  if (title.startsWith("-")) { 
-    title = title.slice(1).trim(); 
+
+  if (title.match(/^[a-z0-9 ]+$/i)) {
+    return title;
   }
-  return title;  
+
+  throw new Error("Invalid Title");
 }
 
 async function buildProject() {
   try {
     console.log(github.context.payload);
-    return;
-    const octokit = github.getOctokit(process.env.GITHUB_TOKEN)
     const contributor = github.context.payload.sender.login
     const body = github.context.payload.issue.body;
     const owner = github.context.payload.repository.owner.login;
@@ -47,6 +47,19 @@ async function buildProject() {
     
   } catch (error) {
     console.log(error.message)
+    switch (error.message) {
+      case "Invalid Title":
+        octokit.issues.createComment({
+          owner,
+          repo,
+          issue_number,
+          body: `@${contributor} I could not parse your title. Please reply with a short descriptive title. It should be a one liner that matches the RegExp **/^[a-z0-9 ]+$/i**\r\rThanks`
+        })
+        break;
+    
+      default:
+        break;
+    }
   }
 }
     

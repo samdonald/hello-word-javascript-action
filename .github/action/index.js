@@ -61,7 +61,9 @@ try {
 
   (async function buildProject(body) {
     try {
-      await fs.writeFile("./projects.md", "## Project Title\r\nMy Title :smile:", err => {console.log(err)});
+      const filePath = "./projects.md";
+      fs.accessSync(filePath, fs.constants.O_RDWR);
+      fs.writeFileSync(filePath, "## Project Title\r\nMy Title :smile:")
       // determin what event triggered the action
       const title = parseTitle(body);
       // const ios = parseIos(body);

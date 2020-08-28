@@ -34,15 +34,15 @@ try {
       // determin what event triggered the action
       console.log(github.context)
       const title = parseTitle(body);
-      const ios = parseIos(body);
-      const android = parseAndroid(body);
-      const description = parseDescription(body);
-      const resources = parseResources(body);
-      const playgrounds = parsePlaygrounds(body);
+      // const ios = parseIos(body);
+      // const android = parseAndroid(body);
+      // const description = parseDescription(body);
+      // const resources = parseResources(body);
+      // const playgrounds = parsePlaygrounds(body);
 
-      if (ios == false && android == false) {
-        // request platform support status
-      }
+      // if (ios == false && android == false) {
+      //   // request platform support status
+      // }
       
       await octokit.issues.lock({owner,repo,issue_number});
     } catch (error) {

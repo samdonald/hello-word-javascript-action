@@ -9,6 +9,13 @@ try {
   const issue_number = github.context.payload.issue.number;
   const body = github.context.payload.issue.body;
 
+  const createComment = (body) => octokit.issues.createComment({
+    owner,
+    repo,
+    issue_number,
+    body
+  });
+
   function parseTitle(body) {
     const projectTitle = "## Project Title";
     const titleIndex = body.indexOf(projectTitle) + projectTitle.length;
@@ -24,17 +31,19 @@ try {
   (async function buildProject(body) {
     try {
       const title = parseTitle(body);
+      const locked = await octokit.issues.lock({owner,repo,issue_number});
+      await octokit.issues.update({owner,repo,issue_number,title:"Updated after locked"})
     } catch (error) {
       switch (error.message) {
         case "Invalid Title":
-          await octokit.issues.createComment({
-            owner,
-            repo,
-            issue_number,
-            body: `@${contributor} I could not parse your title. Please reply with a short descriptive title. It should be a one liner that matches the RegExp **/^[a-z0-9 ]+$/i**\r\rThanks.`
-          })
+          await createComment(
+            `@${contributor} I could not parse your title. Please reply with a short descriptive alphanumeric title.`
+          );
           break;
-      
+        case "No Support":
+          await createComment(
+            `@${contributor} It looks like you have not indicated what platforms your project supports.\r\r Does your project support ***iOS***?\r\r*(Please reply **Yes** or **No**)*`
+          )
         default:
           break;
       }

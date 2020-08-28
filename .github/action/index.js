@@ -19,7 +19,7 @@ try {
   function parseTitle(body) {
     const projectTitle = "## Project Title";
     const titleIndex = body.indexOf(projectTitle) + projectTitle.length;
-    const platformsIndex = body.indexOf("## Platfrom Support");
+    const platformsIndex = body.indexOf("## Platform Support");
     const title = body.substring(titleIndex, platformsIndex).trim();
     
     if (title.match(/^[a-z0-9 ]+$/i)) {

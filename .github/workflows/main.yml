@@ -20,7 +20,7 @@ jobs:
         id: reply
         uses: ./.github/action
       - name: Status
-        run: git status
+        run: git add . && git commit -m "added file" && git push
   # hello_world_job:
   #   runs-on: ubuntu-latest
   #   name: A job to say hello

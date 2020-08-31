@@ -35,7 +35,7 @@ async function projectSubmission() {
   const body = utils.stripComments(github.context.payload.issue.body);
   const title = extractTitle(body);
 
-  console.log("TITLE:", title);
+  console.log("Title:", title);
 
   // Build file
   try {

@@ -126,13 +126,13 @@ async function projectSubmission() {
     
 
     // Build file
-    if (!fs.existsSync(`${title}`)) {
-      const data = `## ${title}\r\n\n## Description\r\n${description}\r\n\n## Related Resources\r\n${resources}`;
-      const dir = await fs.promises.mkdir(`${title}`);
-      const file = await fs.promises.writeFile(`${title}/README.md`, data);
-    } else {
-      console.log("Directory [${title}] already exists.");
-    }
+    // if (!fs.existsSync(`${title}`)) {
+    //   const data = `## ${title}\r\n\n## Description\r\n${description}\r\n\n## Related Resources\r\n${resources}`;
+    //   const dir = await fs.promises.mkdir(`${title}`);
+    //   const file = await fs.promises.writeFile(`${title}/README.md`, data);
+    // } else {
+    //   console.log("Directory [${title}] already exists.");
+    // }
   } catch (error) {
     console.log(error);
   }

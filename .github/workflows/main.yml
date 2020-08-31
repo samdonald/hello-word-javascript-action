@@ -6,6 +6,9 @@ on:
     types:
       - created
 
+env:
+  token: ${{ secrets.GITHUB_TOKEN }}
+
 jobs:
   world:
     runs-on: ubuntu-latest

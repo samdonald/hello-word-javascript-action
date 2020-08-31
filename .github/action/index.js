@@ -67,6 +67,7 @@ async function parseComment() {
     if (github.context.payload.sender.login !== File.issue.contributor) {
       throw new Error("Invalid Contributor");
     } else {
+      console.log("Comment to parse")
       // 1. identify if a comment from the contributor was requested
       // 1.1. does this comment follow the requested comment.
       // 2. id what type of content to look for.

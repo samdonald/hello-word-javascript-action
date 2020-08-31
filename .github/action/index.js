@@ -17,7 +17,13 @@ const getSection = text => (from, to = "") => {
 
 const extractTitle = text => {
   const title = getSection(text)("## Project Title", "## Platform Support")
-  return title.match(/^[a-z0-9]+$/i) ? utils.capitalise(title) : null;
+  console.log("extractTitle", title);
+  if (title.match(/^[a-z0-9]+$/i)) {
+    const cap = utils.capitalise(title);
+    console.log(cap);
+    return cap;
+  }
+  throw "Invalid Title";
 };
 
 

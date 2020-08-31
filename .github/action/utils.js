@@ -12,7 +12,7 @@ exports.capitalise = text => {
 };
 
 
-exports.stripComments(text) {
+exports.stripComments = function stripComments(text) {
   let string = text;
   const openIndex = text.indexOf("<!--");
   const closeIndex = text.indexOf("-->", openIndex);

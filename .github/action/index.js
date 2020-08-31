@@ -17,57 +17,52 @@ const  getSection = text => from => to => {
   }
 };
 
-switch (github.context.action) {
-  case "opened":
-    projectSubmission();
-    break;
-  case "created":
-    break;
-}
-
-
-function extractTitle(body) {
-  const title = getSection(body)("## Project Title")("## Platform Support");
+const extractTitle = text => {
+  const title = getSection(text)("## Project Title")("## Platform Support");
   if (title.match(/^[a-z0-9]+$/i)) {
     return utils.capitalise(title);
+  } else {
+    return "Invalid Title";
   }
-
-  return "Invalid Title"
 }
 
-async function projectSubmission() {
-  const body = utils.stripComments(github.context.payload.issue.body);
-  const title = extractTitle(body);
-
-  // if everything is good we create the new project file
-  if (!fs.existsSync(`${title}`)) {
-    fs.mkdir(`./${title}`, e => {
-      if (e) {
-        console.log(e);
-        return e;
-      } else {
-        fs.writeFile(`./${title}/README.md`, `## ${title}`, e => {
+try {
+  switch (github.context.action) {
+    case "opened":
+      const body = utils.stripComments(github.context.payload.issue.body);
+      const title = extractTitle(body);
+      if (!fs.existsSync(`${title}`)) {
+        fs.mkdir(`./${title}`, e => {
           if (e) {
             console.log(e);
-            return;
           } else {
-            console.log(`[project] "${title}" created.`);
-            octokit.issues.update({
-              owner,
-              repo,
-              issue_number,
-              title: `[project] ${title}`,
-              state: "closed"
-            });
-            return;
+            fs.writeFile(`./${title}/README.md`, `## ${title}`, e => {
+              if (e) {
+                console.log(e);
+              } else {
+                console.log("Directory and File saved.");
+                octokit.issues.update({
+                  owner,
+                  repo,
+                  issue_number,
+                  title: `[project] ${title}`,
+                  state: "closed"
+                })
+              }
+            })
           }
-        });
+        })
+      } else {
+        console.log("Directory Exists!");
       }
-    });
-  } else {
-    console.log("The project already exists!");
+      break;
+    case "created":
+      break;
   }
+} catch (error) {
+  console.log(error);
 }
+
 
 
 // const createComment = (body) => octokit.issues.createComment({

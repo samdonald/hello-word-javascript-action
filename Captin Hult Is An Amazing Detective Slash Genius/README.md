@@ -1,0 +1,1 @@
+## Captin Hult Is An Amazing Detective Slash Genius

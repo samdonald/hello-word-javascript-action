@@ -31,6 +31,8 @@ function extractTitle(body) {
   if (title.match(/^[a-z0-9]+$/i)) {
     return utils.capitalise(title);
   }
+
+  return "Invalid Title"
 }
 
 async function projectSubmission() {

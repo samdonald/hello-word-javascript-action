@@ -18,15 +18,12 @@ jobs:
       - uses: actions/checkout@v1
       - name: Reply action
         id: reply
-        uses: .github/action
+        uses: ./.github/action
       - name: Add & Commit
         # if: there's a new project file to add to the remote repo master branch
         # See https://github.com/marketplace/actions/add-commit for details
         uses: EndBug/add-and-commit@v4.4.0
         with:
-          add: project
-          author_name: Your Name
-          author_email: mail@example.com
           message: 'New project added'
           
 

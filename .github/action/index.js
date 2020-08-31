@@ -21,6 +21,17 @@ const extractTitle = text => {
   throw "Invalid Title";
 };
 
+const extractDescription = text => {
+  const description = getSection(text)("## Description", "## Resources");
+  if (description !== "") return description;
+  throw "No Description";
+}
+
+const extractResources = text => {
+  const resources = getSection(text)("## Resources", "## Playgrounds");
+  return resources;
+}
+
 
 switch (github.context.payload.action) {
   case "opened":
@@ -36,10 +47,12 @@ async function projectSubmission() {
   try {
     const body = utils.stripComments(github.context.payload.issue.body);
     const title = extractTitle(body);
+    const description = extractDescription(body);
+    const resources = extractResources(body);
 
     // Build file
     if (!fs.existsSync(`${title}`)) {
-      const data = `## ${title}`;
+      const data = `## ${title}\r\n\n## Description\r\n${description}\r\n\n## Related Resources\r\n${resources}`;
       const dir = await fs.promises.mkdir(`${title}`);
       const file = await fs.promises.writeFile(`${title}/README.md`, data);
     } else {
@@ -52,14 +65,6 @@ async function projectSubmission() {
 
 
 
-// const extractTitle = text => {
-//   const title = getSection(text)("## Project Title")("## Platform Support");
-//   if (title.match(/^[a-z0-9]+$/i)) {
-//     return utils.capitalise(title);
-//   } else {
-//     return "Invalid Title";
-//   }
-// }
 
 //   switch (github.context.action) {
 //     case "opened":

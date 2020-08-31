@@ -26,6 +26,7 @@ switch (github.context.payload.action) {
     projectSubmission();
     break;
   case "created":
+    console.log("NEW COMMENT");
     break;
 }
 
@@ -34,14 +35,24 @@ async function projectSubmission() {
   const body = utils.stripComments(github.context.payload.issue.body);
   const title = extractTitle(body);
 
+  console.log("TITLE:", title);
+
   if(!fs.existsSync(`${title}`)) {
     fs.mkdir(`${title}`, e => {
-      if (e) return e;
-      fs.writeFile(`${title}/README.md`, `## ${title}`, e => {
-        if (e) return e;
-        console.log("Directory and File saved.");
-      })
+      if (e) {
+        console.log(e);
+      } else {
+        fs.writeFile(`${title}/README.md`, `## ${title}`, e => {
+          if (e) { 
+            console.log(e)
+          } else {
+            console.log("Directory and File saved.");
+          }
+        })
+      }
     })
+  } else {
+    console.log("Directory exists.");
   }
 }
 

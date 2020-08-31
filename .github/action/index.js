@@ -1,10 +1,14 @@
 // const core = require("@actions/core");
-// const github = require("@actions/github");
-// const utils = require("./utils");
+const github = require("@actions/github");
+const utils = require("./utils");
 const fs = require("fs");
 
-const title = "On Fire :fire:";
-if(!fs.existsSync(`${title}`)) {
+const octokit = github.getOctokit(process.env.token);
+const body = utils.stripComments(github.context.payload.issue.body);
+const title = parseTitle(body);
+
+(async function () {
+  if(!fs.existsSync(`${title}`)) {
   fs.mkdir(`./${title}`, e => {
     if (e) {
       console.log(e);
@@ -16,6 +20,13 @@ if(!fs.existsSync(`${title}`)) {
           return e
         } else {
           console.log("Directory and File saved.");
+          await octokit.issues.update({
+            owner: github.context.payload.repository.owner.login,
+            repo: github.context.payload.repository.name,
+            issue_number: github.context.payload.issue.number,
+            title: `${title}`,
+            state: "closed"
+          })
           return;
         }
       })
@@ -25,6 +36,7 @@ if(!fs.existsSync(`${title}`)) {
   console.log("Project already exists")
   return;
 }
+})();
 
 
 // const octokit = github.getOctokit(process.env.token);
@@ -39,22 +51,22 @@ if(!fs.existsSync(`${title}`)) {
 //   body
 // });
 
-// const findSection = text => sectionTitle => endOfSection => {
-//   const start = text.indexOf(sectionTitle) + sectionTitle.length;
-//   if (endOfSection === "") {
-//     return text.substring(start).trim();
-//   } else {
-//     return text.substring(start, text.indexOf(endOfSection)).trim();
-//   }
-// };
+const findSection = text => sectionTitle => endOfSection => {
+  const start = text.indexOf(sectionTitle) + sectionTitle.length;
+  if (endOfSection === "") {
+    return text.substring(start).trim();
+  } else {
+    return text.substring(start, text.indexOf(endOfSection)).trim();
+  }
+};
 
-// function parseTitle(body) {
-//   const title = findSection(body)("## Project Title")("## Platform Support");
-//   if (title.match(/^[a-z0-9 ]+$/i)) {
-//     return utils.capitalise(title);
-//   }
-//   throw new Error("title");
-// }
+function parseTitle(body) {
+  const title = findSection(body)("## Project Title")("## Platform Support");
+  if (title.match(/^[a-z0-9 ]+$/i)) {
+    return utils.capitalise(title);
+  }
+  throw new Error("title");
+}
 
 // function parseDescription(body) {
 //   const description = findSection(body)("## Description")("## Resources");

@@ -22,7 +22,7 @@ switch (github.context.action) {
     break;
 
   default:
-    console.log("ACTION:", github.context.action);
+    console.log("CONTEXT:", github.context);
     break;
 }
 

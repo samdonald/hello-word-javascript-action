@@ -6,34 +6,46 @@ const fs = require("fs");
 const octokit = github.getOctokit(process.env.token);
 const owner = github.context.payload.repository.owner.login;
 const issue_number = github.context.payload.issue.number;
-const repo = github.context.payload.repository.name;
+const repo  = github.context.payload.repository.name;
+
+const getSection = text => (from, to = "") => {
+  const start = text.indexOf(from) + from.length;
+  return to === ""
+    ? text.substring(start).trim()
+    : text.substring(start, text.indexOf(to)).trim();
+}
+
+const extractTitle = text => {
+  const title = getSection(text)("## Project Title", "## Platform Support")
+  return title.match(/^[a-z0-9]+$/i) ? utils.capitalise(title) : null;
+};
+
 
 switch (github.context.payload.action) {
   case "opened":
-    if (!fs.existsSync("Title 2")) {
-      fs.mkdir("Title 2", e => {
-        if (e) return;
-        fs.writeFile("Title 2/README.md", "## Title 2", e => {
-          if (e) return;
-          console.log("Directory and File saved!");
-        })
-      })
-    }
+    projectSubmission();
     break;
-
-  default:
-    console.log("ACTION:", github.context.payload.action);
+  case "created":
     break;
 }
 
-// const  getSection = text => from => to => {
-//   const start = text.indexOf(from) + from.length;
-//   if (to === "") {
-//     return text.substring(start).trim();
-//   } else {
-//     return text.substring(start, text.indexOf(to)).trim();
-//   }
-// };
+
+async function projectSubmission() {
+  const body = utils.stripComments(github.context.payload.issue.body);
+  const title = extractTitle(body);
+
+  if(!fs.existsSync(`${title}`)) {
+    fs.mkdir(`${title}`, e => {
+      if (e) return e;
+      fs.writeFile(`${title}/README.md`, `## ${title}`, e => {
+        if (e) return e;
+        console.log("Directory and File saved.");
+      })
+    })
+  }
+}
+
+
 
 // const extractTitle = text => {
 //   const title = getSection(text)("## Project Title")("## Platform Support");

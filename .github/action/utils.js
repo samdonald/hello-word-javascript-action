@@ -6,7 +6,7 @@ exports.platformSupport = text => platform => text.replace(/\s/g, "").indexOf(`[
 
 exports.capitalise = text => {
   return text.toLowerCase().replace(
-    /(?:^|\s|["'([{}])])+\S/g, 
+    /(?:^|\s|["'([{])+\S/g, 
     match => match.toUpperCase()
   );
 };

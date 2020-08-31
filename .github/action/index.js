@@ -96,13 +96,25 @@ try {
       const title = parseTitle(body);
 
       if (!fs.existsSync(`${title}`)) {
+        console.log("File does not exist.")
         fs.mkdir(`${title}`, err => {
-          if (err) return console.log(err);
-          fs.writeFile(`./${title}/README.md`, `## ${title}`, err => {
-            if (err) return console.log(err);
-            console.log("Directory and file saved.");
-          })
-        })
+          if (err) {
+            console.log(err);
+            return err
+          } else {
+            fs.writeFile(`./${title}/README.md`, `## ${title}`, err => {
+              if (err) {
+                console.log(err);
+                return err;
+              } else {
+                console.log("Directory and file saved.");
+                return;
+              }
+            });
+          }
+        });
+      } else {
+        console.log(`File (${title}) exists.`)
       }
       // const description = parseDescription(body);
       // const resources = parseResources(body);

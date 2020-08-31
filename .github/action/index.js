@@ -30,7 +30,9 @@ const extractTitle = text => {
   switch (github.context.action) {
     case "opened":
       const body = utils.stripComments(github.context.payload.issue.body);
+      console.log("BODY", body);
       const title = extractTitle(body);
+      console.log("TITLE", title);
       if (!fs.existsSync(`${title}`)) {
         fs.mkdir(`./${title}`, e => {
           if (e) {
@@ -41,13 +43,6 @@ const extractTitle = text => {
                 console.log(e);
               } else {
                 console.log("Directory and File saved.");
-                octokit.issues.update({
-                  owner,
-                  repo,
-                  issue_number,
-                  title: `[project] ${title}`,
-                  state: "closed"
-                })
               }
             })
           }
@@ -57,10 +52,11 @@ const extractTitle = text => {
       }
       break;
     case "created":
+      console.log("CREATED");
       break;
   }
 } catch (error) {
-  console.log(error);
+  console.log("ERROR", error);
 }
 
 

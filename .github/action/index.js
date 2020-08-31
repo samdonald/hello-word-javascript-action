@@ -38,7 +38,7 @@ const extractPlatformSupport = text => platform => {
 const extractPlaygrounds = text => {
   const section = getSection(text)("## Playgrounds");
   const url = "play.nativescript.org/?template=play-";
-  const exp = new RegExp(/(play.nativescript.org\/\?template\=play-(?:js|tsc|ng|react|vue|svelte)\&id\=(?:\w)+\&v\=(?:\d)+)|[^]/, g);
+  const exp = new RegExp(/(play.nativescript.org\/\?template\=play-(?:js|tsc|ng|react|vue|svelte)\&id\=(?:\w)+\&v\=(?:\d)+)|[^]/, "g");
   const playgrounds = section.split(" ")
     .filter(playground => playground.includes(url))
     .map(url => url.replace(exp, "$1"));

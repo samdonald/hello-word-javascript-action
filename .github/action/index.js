@@ -3,11 +3,6 @@ const github = require("@actions/github");
 const utils = require("./utils");
 const fs = require("fs");
 
-const octokit = github.getOctokit(process.env.token);
-const body = utils.stripComments(github.context.payload.issue.body);
-const title = parseTitle(body);
-
-
 
 // const octokit = github.getOctokit(process.env.token);
 // const owner = github.context.payload.repository.owner.login;
@@ -37,6 +32,10 @@ function parseTitle(body) {
   }
   throw new Error("title");
 }
+
+const octokit = github.getOctokit(process.env.token);
+const body = utils.stripComments(github.context.payload.issue.body);
+const title = parseTitle(body);
 
 if(!fs.existsSync(`${title}`)) {
   fs.mkdir(`./${title}`, e => {

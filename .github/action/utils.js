@@ -2,7 +2,7 @@ exports.removeSpaces = text => text.replace(/ {2,}/gm, "");
 
 exports.stribEmptyLines = text => text.replace(/^\s*[\r\n]/gm, "");
 
-exports.platformSupport = text => platform => text.replace(/\s/g, "").indexOf(`[x]${platform}`) !== -1;
+exports.platformSupport = text => platform => text.toLowerCase().replace(/\s/g, "").indexOf(`[x]${platform}`) !== -1;
 
 exports.capitalise = text => {
   return text.toLowerCase().replace(

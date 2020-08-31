@@ -17,19 +17,50 @@ const getSection = text => (from, to = "") => {
 
 const extractTitle = text => {
   const title = getSection(text)("## Project Title", "## Platform Support")
-  if (title.match(/^[a-z0-9 ]+$/i)) return utils.capitalise(title);
-  throw "Invalid Title";
+  return title.match(/^[a-z0-9 ]+$/i) ? utils.capitalise(title) : null;
 };
 
 const extractDescription = text => {
   const description = getSection(text)("## Description", "## Resources");
-  if (description !== "") return description;
-  throw "No Description";
+  return description !== "" ? description : null;
 }
 
 const extractResources = text => {
   const resources = getSection(text)("## Resources", "## Playgrounds");
   return resources;
+}
+
+const extractPlatformSupport = text => platform => {
+  const platforms = getSection(text)("## Platform Support", "## Description");
+  return utils.platformSupport(platforms)(platform);
+}
+
+const extractPlaygrounds = text => {
+  const section = getSection(text)("## Playgrounds");
+  const url = "play.nativescript.org/?template=play-";
+  const exp = new RegExp(/(play.nativescript.org\/\?template\=play-(?:js|tsc|ng|react|vue|svelte)\&id\=(?:\w)+\&v\=(?:\d)+)|[^]/, g);
+  const playgrounds = section.split(" ")
+    .filter(playground => playground.includes(url))
+    .map(url => url.replace(exp, "$1"));
+
+  if (playgrounds.length < 1) return null;
+  
+  return playgrounds.reduce((obj, item) => {
+    if (item.includes("play-js")) {
+      obj["JavaScript"] = item;
+    } else if(item.includes("play-tsc")) {
+      obj["TypeScript"] = item;
+    } else if (item.includes("play-ng")) {
+      obj["Angular"] = item;
+    } else if (item.includes("play-vue")) {
+      obj["Vue"] = item;
+    } else if (item.includes("play-react")) {
+      obj["React"] = item;
+    } else if (item.includes("play-svelte")) {
+      obj["Svelte"] = item;
+    }
+    return obj;
+  }, {});
 }
 
 
@@ -47,8 +78,52 @@ async function projectSubmission() {
   try {
     const body = utils.stripComments(github.context.payload.issue.body);
     const title = extractTitle(body);
-    const description = extractDescription(body);
-    const resources = extractResources(body);
+
+    if (!fs.existsSync(`${title}`)) {
+      const description = extractDescription(body);
+      const resources = extractResources(body);
+      const ios = extractPlatformSupport(body)("ios");
+      const android = extractPlatformSupport(body)("android");
+      const playgrounds = extractPlaygrounds(body);
+      
+      // all minimum requirements in place
+      if (title && description && playgrounds && (ios + android)) {
+        const data = 
+        `
+        [JavaScript]: https://img.shields.io/badge/JavaScript-%E2%9C%93-F7DF1E.svg?logo=JavaScript&logoColor=F7DF1E&labelColor=000000
+        
+        [Playground (JavaScript)]: ${playgrounds.JavaScript}
+        
+        ## ${title}
+
+        ### Description
+        ${description}
+
+        ### Related Resources
+        ${resources}
+
+        ### Playgrounds
+        | [Playground (JavaScript)] |
+        | --- |
+        | [![JavaScript]][Playground (JavaScript)] |
+        `;
+
+        const directory = await fs.promises.mkdir(`${title}`);
+        const file = await fs.promises.writeFile(`${title}/README.md`, data);
+        await octokit.issues.update({
+          owner,
+          repo,
+          issue_number,
+          title: "[project] ${title}",
+        })
+      }
+    } else {
+      console.log("Directory already exists");
+    }
+
+    
+
+    
 
     // Build file
     if (!fs.existsSync(`${title}`)) {

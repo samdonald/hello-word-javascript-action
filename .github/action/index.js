@@ -7,7 +7,7 @@ const octokit = github.getOctokit(process.env.token);
 const body = utils.stripComments(github.context.payload.issue.body);
 const title = parseTitle(body);
 
-(async function () {
+
   if(!fs.existsSync(`${title}`)) {
   fs.mkdir(`./${title}`, e => {
     if (e) {
@@ -20,14 +20,13 @@ const title = parseTitle(body);
           return e
         } else {
           console.log("Directory and File saved.");
-          await octokit.issues.update({
+          octokit.issues.update({
             owner: github.context.payload.repository.owner.login,
             repo: github.context.payload.repository.name,
             issue_number: github.context.payload.issue.number,
             title: `${title}`,
             state: "closed"
-          })
-          return;
+          });
         }
       })
     }
@@ -36,7 +35,6 @@ const title = parseTitle(body);
   console.log("Project already exists")
   return;
 }
-})();
 
 
 // const octokit = github.getOctokit(process.env.token);

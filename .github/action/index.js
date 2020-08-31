@@ -1,13 +1,72 @@
-// const core = require("@actions/core");
+const core = require("@actions/core");
 const github = require("@actions/github");
 const utils = require("./utils");
 const fs = require("fs");
 
+const octokit = github.getOctokit(process.env.token);
+const owner = github.context.payload.repository.owner.login;
+const issue_number = github.context.payload.issue.number;
+const repo = github.context.payload.repository.name;
 
-// const octokit = github.getOctokit(process.env.token);
-// const owner = github.context.payload.repository.owner.login;
-// const issue_number = github.context.payload.issue.number;
-// const repo = github.context.payload.repository.name;
+const  getSection = text => from => to => {
+  const start = text.indexOf(from) + from.length;
+  if (to === "") {
+    return text.substring(start).trim();
+  } else {
+    return text.substring(start, text.indexOf(to)).trim();
+  }
+};
+
+switch (github.context.action) {
+  case "opened":
+    projectSubmission();
+    break;
+  case "created":
+    break;
+}
+
+
+function extractTitle(body) {
+  const title = getSection(body)("## Project Title")("## Platform Support");
+  if (title.match(/^[a-z0-9]+$/i)) {
+    return utils.capitalise(title);
+  }
+}
+
+async function projectSubmission() {
+  const body = utils.stripComments(github.context.payload.issue.body);
+  const title = extractTitle(body);
+
+  // if everything is good we create the new project file
+  if (!fs.existsSync(`${title}`)) {
+    fs.mkdir(`./${title}`, e => {
+      if (e) {
+        console.log(e);
+        return e;
+      } else {
+        fs.writeFile(`./${title}/README.md`, `## ${title}`, e => {
+          if (e) {
+            console.log(e);
+            return;
+          } else {
+            console.log(`[project] "${title}" created.`);
+            octokit.issues.update({
+              owner,
+              repo,
+              issue_number,
+              title: `[project] ${title}`,
+              state: "closed"
+            });
+            return;
+          }
+        });
+      }
+    });
+  } else {
+    console.log("The project already exists!");
+  }
+}
+
 
 // const createComment = (body) => octokit.issues.createComment({
 //   owner,
@@ -16,54 +75,53 @@ const fs = require("fs");
 //   body
 // });
 
-const findSection = text => sectionTitle => endOfSection => {
-  const start = text.indexOf(sectionTitle) + sectionTitle.length;
-  if (endOfSection === "") {
-    return text.substring(start).trim();
-  } else {
-    return text.substring(start, text.indexOf(endOfSection)).trim();
-  }
-};
+// const findSection = text => sectionTitle => endOfSection => {
+//   const start = text.indexOf(sectionTitle) + sectionTitle.length;
+//   if (endOfSection === "") {
+//     return text.substring(start).trim();
+//   } else {
+//     return text.substring(start, text.indexOf(endOfSection)).trim();
+//   }
+// };
 
-function parseTitle(body) {
-  const title = findSection(body)("## Project Title")("## Platform Support");
-  if (title.match(/^[a-z0-9 ]+$/i)) {
-    return utils.capitalise(title);
-  }
-  throw new Error("title");
-}
+// function parseTitle(body) {
+//   const title = findSection(body)("## Project Title")("## Platform Support");
+//   if (title.match(/^[a-z0-9 ]+$/i)) {
+//     return utils.capitalise(title);
+//   }
+//   throw new Error("title");
+// }
 
-const octokit = github.getOctokit(process.env.token);
-const body = utils.stripComments(github.context.payload.issue.body);
-const title = parseTitle(body);
+// const body = utils.stripComments(github.context.payload.issue.body);
+// const title = parseTitle(body);
 
-if(!fs.existsSync(`${title}`)) {
-  fs.mkdir(`./${title}`, e => {
-    if (e) {
-      console.log(e);
-      return e;
-    } else {
-      fs.writeFile(`./${title}/README.md`, `## ${title}`, e => {
-        if (e) {
-          console.log(e);
-          return e
-        } else {
-          console.log("Directory and File saved.");
-          octokit.issues.update({
-            owner: github.context.payload.repository.owner.login,
-            repo: github.context.payload.repository.name,
-            issue_number: github.context.payload.issue.number,
-            title: `${title}`,
-            state: "closed"
-          });
-        }
-      })
-    }
-  })
-} else {
-  console.log("Project already exists")
-  return;
-}
+// if(!fs.existsSync(`${title}`)) {
+//   fs.mkdir(`./${title}`, e => {
+//     if (e) {
+//       console.log(e);
+//       return e;
+//     } else {
+//       fs.writeFile(`./${title}/README.md`, `## ${title}`, e => {
+//         if (e) {
+//           console.log(e);
+//           return e
+//         } else {
+//           console.log("Directory and File saved.");
+//           octokit.issues.update({
+//             owner: github.context.payload.repository.owner.login,
+//             repo: github.context.payload.repository.name,
+//             issue_number: github.context.payload.issue.number,
+//             title: `${title}`,
+//             state: "closed"
+//           });
+//         }
+//       })
+//     }
+//   })
+// } else {
+//   console.log("Project already exists")
+//   return;
+// }
 
 // function parseDescription(body) {
 //   const description = findSection(body)("## Description")("## Resources");

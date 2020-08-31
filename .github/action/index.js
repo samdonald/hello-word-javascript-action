@@ -37,20 +37,25 @@ async function projectSubmission() {
 
   console.log("TITLE:", title);
 
+
   if(!fs.existsSync(`${title}`)) {
-    fs.mkdir(`${title}`, e => {
-      if (e) {
-        console.log(e);
-      } else {
-        fs.writeFile(`${title}/README.md`, `## ${title}`, e => {
-          if (e) { 
-            console.log(e)
-          } else {
-            console.log("Directory and File saved.");
-          }
-        })
-      }
-    })
+    const dir = await fs.promises.mkdir(`${title}`);
+    console.log(dir);
+    const file = await fs.promises.writeFile(`${title}/README`, `## ${title}`);
+    console.log(file);
+    // fs.mkdir(`${title}`, e => {
+    //   if (e) {
+    //     console.log(e);
+    //   } else {
+    //     fs.writeFile(`${title}/README.md`, `## ${title}`, e => {
+    //       if (e) { 
+    //         console.log(e)
+    //       } else {
+    //         console.log("Directory and File saved.");
+    //       }
+    //     })
+    //   }
+    // })
   } else {
     console.log("Directory exists.");
   }

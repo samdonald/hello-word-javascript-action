@@ -8,7 +8,7 @@ const owner = github.context.payload.repository.owner.login;
 const issue_number = github.context.payload.issue.number;
 const repo = github.context.payload.repository.name;
 
-switch (github.context.action) {
+switch (github.context.payload.action) {
   case "opened":
     if (!fs.existsSync("Title 2")) {
       fs.mkdir("Title 2", e => {
@@ -22,7 +22,7 @@ switch (github.context.action) {
     break;
 
   default:
-    console.log("CONTEXT:", github.context);
+    console.log("ACTION:", github.context.payload.action);
     break;
 }
 

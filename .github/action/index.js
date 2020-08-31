@@ -17,15 +17,8 @@ const getSection = text => (from, to = "") => {
 
 const extractTitle = text => {
   const title = getSection(text)("## Project Title", "## Platform Support")
-  console.log("extractTitle", title);
-  if (title.match(/^[a-z0-9 ]+$/i)) {
-    const cap = utils.capitalise(title);
-    console.log(cap);
-    return cap;
-  } else {
-    console.log("no match", title);
-    throw "Invalid Title";
-  }
+  if (title.match(/^[a-z0-9 ]+$/i)) return utils.capitalise(title);
+  throw "Invalid Title";
 };
 
 
@@ -43,8 +36,6 @@ async function projectSubmission() {
   try {
     const body = utils.stripComments(github.context.payload.issue.body);
     const title = extractTitle(body);
-
-    console.log("Title:", title);
 
     // Build file
     if (!fs.existsSync(`${title}`)) {

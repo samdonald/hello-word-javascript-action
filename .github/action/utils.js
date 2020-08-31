@@ -1,10 +1,10 @@
-export const removeSpaces = text => text.replace(/ {2,}/gm, "");
+exports.removeSpaces = text => text.replace(/ {2,}/gm, "");
 
-export const stribEmptyLines = text => text.replace(/^\s*[\r\n]/gm, "");
+exports.stribEmptyLines = text => text.replace(/^\s*[\r\n]/gm, "");
 
-export const platformSupport = text => platform => text.replace(/\s/g, "").indexOf(`[x]${platform}`) !== -1;
+exports.platformSupport = text => platform => text.replace(/\s/g, "").indexOf(`[x]${platform}`) !== -1;
 
-export const capitalise = text => {
+exports.capitalise = text => {
   return text.toLowerCase().replace(
     /(?:^|\s|["'([{}])])+\S/g, 
     match => match.toUpperCase()
@@ -12,7 +12,7 @@ export const capitalise = text => {
 };
 
 
-export function stripComments(text) {
+exports.stripComments(text) {
   let string = text;
   const openIndex = text.indexOf("<!--");
   const closeIndex = text.indexOf("-->", openIndex);

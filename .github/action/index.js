@@ -2,6 +2,7 @@ const core = require("@actions/core");
 const github = require("@actions/github");
 const utils = require("./utils");
 const fs = require("fs");
+try {
 
 const octokit = github.getOctokit(process.env.token);
 const owner = github.context.payload.repository.owner.login;
@@ -26,7 +27,6 @@ const extractTitle = text => {
   }
 }
 
-try {
   switch (github.context.action) {
     case "opened":
       const body = utils.stripComments(github.context.payload.issue.body);

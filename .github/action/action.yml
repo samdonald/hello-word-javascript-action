@@ -1,13 +1,28 @@
 name: 'Hello World'
 description: 'Greet someone and record the time'
-inputs:
-  who-to-greet:
-    description: 'Who to greet'
-    required: true
-    default: 'World'
 outputs:
-  time:
-    description: 'The time we greeted you'
+  title:
+    description: "The project title"
+  ios:
+    description: "Does the project support iOS"
+  android:
+    description: "Does the project support Android"
+  description:
+    description: "The project description"
+  resources:
+    description: "Any relavent project resources"
+  javascript:
+    description: "Link to the JavaScript Playground"
+  typescript:
+    description: "Link to the TypeScript Playground"
+  angular:
+    description: "Link to the Angular Playground"
+  vue:
+    description: "Link to the Vue Playground"
+  react:
+    description: "Link to the React Playground"
+  svelte:
+    description: "Link to the Svelte Playground"
 runs:
   using: 'node12'
   main: 'index.js'

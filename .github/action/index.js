@@ -1,106 +1,153 @@
-// const core = require("@actions/core");
-// const github = require("@actions/github");
+const core = require("@actions/core");
+const github = require("@actions/github");
+const utils = require("./utils");
 const fs = require("fs");
 
-fs.access("project.md", (e) => {
-  console.log("accessFile:", e)
-  fs.writeFile("project.md", "## Project Title\r\nMy Title\r\n## Platform Support", e => {
-    console.log("writeFile:", e)
-  })
-})
 
-// const octokit = github.getOctokit(process.env.GITHUB_TOKEN);
-// const owner = github.context.payload.repository.owner.login;
-// const issue_number = github.context.payload.issue.number;
-// const repo = github.context.payload.repository.name;
+const octokit = github.getOctokit(process.env.TOKEN);
+const owner = github.context.payload.repository.owner.login;
+const issue_number = github.context.payload.issue.number;
+const repo = github.context.payload.repository.name;
 
-// async function parseComment() {
-//   try {
-//     // const file = ;
-//     // get working issue from metadata from file
-//     // if sender is same as issue creator pay attention, else don't.
-//     if (github.context.payload.sender.login !== File.issue.contributor) {
-//       throw new Error("Invalid Contributor");
-//     } else {
-//       // 1. identify if a comment from the contributor was requested
-//       // 1.1. does this comment follow the requested comment.
-//       // 2. id what type of content to look for.
-//       // 3. parse comment for content
-//       // 4. update project content if found or reply to contributor that the information could not be found.
-//     }
-//   } catch (error) {
-//     console.log(error.message)
-//   }
-// }
+const createComment = (body) => octokit.issues.createComment({
+  owner,
+  repo,
+  issue_number,
+  body
+});
 
-// try {
-//   const contributor = github.context.payload.sender.login;
-//   const body = github.context.payload.issue.body;
+const findSection = text => sectionTitle => endOfSection => {
+  const start = text.indexOf(sectionTitle) + sectionTitle.length;
+  if (endOfSection === "") {
+    return text.substring(start).trim();
+  } else {
+    return text.substring(start, text.indexOf(endOfSection)).trim();
+  }
+};
 
-//   const createComment = (body) => octokit.issues.createComment({
-//     owner,
-//     repo,
-//     issue_number,
-//     body
-//   });
+function parseTitle(body) {
+  const title = findSection(body)("## Project Title")("## Platform Support");
+  if (title.match(/^[a-z0-9 ]+$/i)) {
+    return utils.capitalise(title);
+  }
+  throw new Error("title");
+}
 
-//   function parseTitle(body) {
-//     const projectTitle = "## Project Title";
-//     const titleIndex = body.indexOf(projectTitle) + projectTitle.length;
-//     const platformsIndex = body.indexOf("## Platform Support");
-//     const title = body.substring(titleIndex, platformsIndex).trim();
-    
-//     if (title.match(/^[a-z0-9 ]+$/i)) {
-//       return title;
-//     }
+function parseDescription(body) {
+  const description = findSection(body)("## Description")("## Resources");
 
-//     throw new Error("Invalid Title");
-//   }
+  if (description !== "") {
+    return description;
+  }
 
-//   switch (github.context.action) {
-//     case "opened":
-//       buildProject(body);
-//       break;
-//     case "created":
-//       parseComment();
-//       break;
-//   }
+  throw new Error("description");
+}
 
-//   (async function buildProject(body) {
-//     try {
-//       const filePath = "./projects.md";
-//       fs.accessSync(filePath, fs.constants.O_RDWR);
-//       fs.writeFileSync(filePath, "## Project Title\r\nMy Title :smile:")
-//       // determin what event triggered the action
-//       const title = parseTitle(body);
-//       // const ios = parseIos(body);
-//       // const android = parseAndroid(body);
-//       // const description = parseDescription(body);
-//       // const resources = parseResources(body);
-//       // const playgrounds = parsePlaygrounds(body);
+function parseResources(body) {
+  const resources = findSection(body)("## Resources")("## Playgrounds");
+  if (resources !== "") {
+    return resources;
+  }
+  throw new Error("resources");
+}
 
-//       // if (ios == false && android == false) {
-//       //   // request platform support status
-//       // }
+function parsePlaygrounds(body) {
+  const playgrounds = findSection(body)("## Playgrounds")("");
+  if (playgrounds) {
+    return playgrounds;
+  }
+  throw new Error("playgrounds");
+}
+
+async function parseComment() {
+  try {
+    // const file = ;
+    // get working issue from metadata from file
+    // if sender is same as issue creator pay attention, else don't.
+    if (github.context.payload.sender.login !== File.issue.contributor) {
+      throw new Error("Invalid Contributor");
+    } else {
+      // 1. identify if a comment from the contributor was requested
+      // 1.1. does this comment follow the requested comment.
+      // 2. id what type of content to look for.
+      // 3. parse comment for content
+      // 4. update project content if found or reply to contributor that the information could not be found.
+    }
+  } catch (error) {
+    console.log(error.message)
+  }
+}
+
+try {
+  const contributor = github.context.payload.sender.login;
+
+  switch (github.context.action) {
+    case "opened":
+      projectSubmitted();
+      break;
+    case "created":
+      parseComment();
+      break;
+  }
+
+  async function projectSubmitted() {
+    try {
+      const body = utils.stripComments(github.context.payload.issue.body);
+      const title = parseTitle(body);
+
+      if (!fs.existsSync(`${title}`)) {
+        fs.mkdir(`${title}`, err => {
+          if (err) return console.log(err);
+          fs.writeFile(`./${title}/README.md`, `## ${title}`, err => {
+            if (err) return console.log(err);
+            console.log("Directory and file saved.");
+          })
+        })
+      }
+      // const description = parseDescription(body);
+      // const resources = parseResources(body);
+      // const playgrounds = parsePlaygrounds(body);
+      // const ios = utils.platformSupport(body)("ios");
+      // const android = utils.platformSupport(body)("android");
       
-//       await octokit.issues.lock({owner,repo,issue_number});
-//     } catch (error) {
-//       switch (error.message) {
-//         case "Invalid Title":
-//           await createComment(
-//             `@${contributor} I could not parse your title. Please reply with a short descriptive alphanumeric title.`
-//           );
-//           break;
-//         case "No Support":
-//           await createComment(
-//             `@${contributor} It looks like you have not indicated what platforms your project supports.\r\r Does your project support ***iOS***?\r\r*(Please reply **Yes** or **No**)*`
-//           )
-//         default:
-//           break;
-//       }
-//     }
-//   })(body);
+      // core.setOutput("title", title);
+      // core.setOutput("description", description);
+      // core.setOutput("resources", resources);
+      // core.setOutput("javascript", playgrounds.javascript);
+      // core.setOutput("typescript", playgrounds.typescript);
+      // core.setOutput("angular", playgrounds.angular);
+      // core.setOutput("vue", playgrounds.vue);
+      // core.setOutput("react", playgrounds.react);
+      // core.setOutput("svelte", playgrounds.svelte);
+      // core.setOutput("ios", ios)
+      // core.setOutput("android", android);
 
-// } catch (error) {
-//   console.log(error.message);
-// }
+      // if (!(ios + android)) {
+      //   throw new Error("platform");
+      // }
+      
+    } catch (error) {
+      switch (error.message) {
+        case "title":
+          await createComment(
+            `@${contributor} I could not parse your title. Please reply with a short descriptive alphanumeric title.`
+          );
+          break;
+        case "description":
+          break;
+        case "resources":
+          break;
+        case "playground":
+          break;
+        case "platform":
+          await createComment(
+            `@${contributor} It looks like you have not indicated what platforms your project supports.\r\rDoes your project support ***iOS***?\r\r*(Please reply **Yes** or **No**)*`
+          );
+          break;
+      }
+    }
+  };
+
+} catch (error) {
+  console.log(error.message);
+}

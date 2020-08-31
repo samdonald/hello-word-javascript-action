@@ -12,24 +12,21 @@ jobs:
     if: startsWith(github.event.issue.title, '[project]')
     name: Reply
     env:
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      TOKEN: ${{ secrets.PLAY_PIT_TOKEN }}
       SSH: ${{ secrets.ssh }}
     steps:
       - uses: actions/checkout@v1
       - name: Reply action
         id: reply
-        uses: ./.github/action
-      - name: Status
-        run: git add . && git commit -m "added file" && git push
-  # hello_world_job:
-  #   runs-on: ubuntu-latest
-  #   name: A job to say hello
-  #   steps:
-  #     - uses: actions/checkout@v1
-  #     - name: Action setup
-  #       id: hello
-  #       uses: ./.github/action
-  #       with:
-  #         who-to-greet: 'Mona the Octocat'
-  #     - name: Get the output time
-  #       run: echo "The time was ${{ steps.hello.outputs.time }}"
+        uses: .github/action
+      - name: Add & Commit
+        # if: there's a new project file to add to the remote repo master branch
+        # See https://github.com/marketplace/actions/add-commit for details
+        uses: EndBug/add-and-commit@v4.4.0
+        with:
+          add: project
+          author_name: Your Name
+          author_email: mail@example.com
+          message: 'New project added'
+          
+

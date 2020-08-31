@@ -2,62 +2,76 @@ const core = require("@actions/core");
 const github = require("@actions/github");
 const utils = require("./utils");
 const fs = require("fs");
-try {
 
 const octokit = github.getOctokit(process.env.token);
 const owner = github.context.payload.repository.owner.login;
 const issue_number = github.context.payload.issue.number;
 const repo = github.context.payload.repository.name;
 
-const  getSection = text => from => to => {
-  const start = text.indexOf(from) + from.length;
-  if (to === "") {
-    return text.substring(start).trim();
-  } else {
-    return text.substring(start, text.indexOf(to)).trim();
-  }
-};
-
-const extractTitle = text => {
-  const title = getSection(text)("## Project Title")("## Platform Support");
-  if (title.match(/^[a-z0-9]+$/i)) {
-    return utils.capitalise(title);
-  } else {
-    return "Invalid Title";
-  }
-}
-
-  switch (github.context.action) {
-    case "opened":
-      const body = utils.stripComments(github.context.payload.issue.body);
-      console.log("BODY", body);
-      const title = extractTitle(body);
-      console.log("TITLE", title);
-      if (!fs.existsSync(`${title}`)) {
-        fs.mkdir(`./${title}`, e => {
-          if (e) {
-            console.log(e);
-          } else {
-            fs.writeFile(`./${title}/README.md`, `## ${title}`, e => {
-              if (e) {
-                console.log(e);
-              } else {
-                console.log("Directory and File saved.");
-              }
-            })
-          }
+switch (github.context.action) {
+  case "opened":
+    if (!fs.existsSync("Title 2")) {
+      fs.mkdir("Title 2", e => {
+        if (e) return;
+        fs.writeFile("Title 2/README.md", "## Title 2", e => {
+          if (e) return;
+          console.log("Directory and File saved!");
         })
-      } else {
-        console.log("Directory Exists!");
-      }
-      break;
-    case "created":
-      console.log("CREATED");
-      break;
-  }
-} catch (error) {
-  console.log("ERROR", error);
+      })
+    }
+    break;
+
+  default:
+    console.log("ACTION:", github.context.action);
+    break;
 }
+
+// const  getSection = text => from => to => {
+//   const start = text.indexOf(from) + from.length;
+//   if (to === "") {
+//     return text.substring(start).trim();
+//   } else {
+//     return text.substring(start, text.indexOf(to)).trim();
+//   }
+// };
+
+// const extractTitle = text => {
+//   const title = getSection(text)("## Project Title")("## Platform Support");
+//   if (title.match(/^[a-z0-9]+$/i)) {
+//     return utils.capitalise(title);
+//   } else {
+//     return "Invalid Title";
+//   }
+// }
+
+//   switch (github.context.action) {
+//     case "opened":
+//       const body = utils.stripComments(github.context.payload.issue.body);
+//       console.log("BODY", body);
+//       const title = extractTitle(body);
+//       console.log("TITLE", title);
+//       if (!fs.existsSync(`${title}`)) {
+//         fs.mkdir(`./${title}`, e => {
+//           if (e) {
+//             console.log(e);
+//           } else {
+//             fs.writeFile(`./${title}/README.md`, `## ${title}`, e => {
+//               if (e) {
+//                 console.log(e);
+//               } else {
+//                 console.log("Directory and File saved.");
+//               }
+//             })
+//           }
+//         })
+//       } else {
+//         console.log("Directory Exists!");
+//       }
+//       break;
+//     case "created":
+//       console.log("CREATED");
+//       break;
+//   }
 
 
 

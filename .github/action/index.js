@@ -8,34 +8,6 @@ const body = utils.stripComments(github.context.payload.issue.body);
 const title = parseTitle(body);
 
 
-  if(!fs.existsSync(`${title}`)) {
-  fs.mkdir(`./${title}`, e => {
-    if (e) {
-      console.log(e);
-      return e;
-    } else {
-      fs.writeFile(`./${title}/README.md`, `## ${title}`, e => {
-        if (e) {
-          console.log(e);
-          return e
-        } else {
-          console.log("Directory and File saved.");
-          octokit.issues.update({
-            owner: github.context.payload.repository.owner.login,
-            repo: github.context.payload.repository.name,
-            issue_number: github.context.payload.issue.number,
-            title: `${title}`,
-            state: "closed"
-          });
-        }
-      })
-    }
-  })
-} else {
-  console.log("Project already exists")
-  return;
-}
-
 
 // const octokit = github.getOctokit(process.env.token);
 // const owner = github.context.payload.repository.owner.login;
@@ -64,6 +36,34 @@ function parseTitle(body) {
     return utils.capitalise(title);
   }
   throw new Error("title");
+}
+
+if(!fs.existsSync(`${title}`)) {
+  fs.mkdir(`./${title}`, e => {
+    if (e) {
+      console.log(e);
+      return e;
+    } else {
+      fs.writeFile(`./${title}/README.md`, `## ${title}`, e => {
+        if (e) {
+          console.log(e);
+          return e
+        } else {
+          console.log("Directory and File saved.");
+          octokit.issues.update({
+            owner: github.context.payload.repository.owner.login,
+            repo: github.context.payload.repository.name,
+            issue_number: github.context.payload.issue.number,
+            title: `${title}`,
+            state: "closed"
+          });
+        }
+      })
+    }
+  })
+} else {
+  console.log("Project already exists")
+  return;
 }
 
 // function parseDescription(body) {

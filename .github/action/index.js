@@ -93,7 +93,7 @@ async function projectSubmission() {
       if (title && description && playgrounds && (ios + android)) {
         const directoryPath = `projects/${title}`;
         const filePath = `projects/${title}/README.md`;
-        const template = await fs.promises.readFile("./.github/TEMPLATE.md");
+        const template = await fs.promises.readFile("./.github/action/TEMPLATE.md");
         const data = template.replace(/\{\{(?:[a-z]|\.)+\}\}/, match => {
           switch (match) {
             case "{{ios}}":

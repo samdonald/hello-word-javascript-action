@@ -8,15 +8,6 @@
 [Android]: https://img.shields.io/badge/android-%E2%9C%93-949393.svg?logo=android&logoColor=white
 
 
-<!-- Playground links -->
-[Core (JavaScript)]: {{playgrounds.js}}
-[Angular]: {{playgrounds.ng}}
-[TypeScript]: {{playgrounds.tsc}}
-[Vue]: {{playgrounds.vue}}
-[React]: {{playgrounds.react}}
-[Svelte]: {{playgrounds.svelte}}
-
-
 <!-- Platform Support (i.e. ![ios]) -->
 {{ios}}
 {{android}}
@@ -49,4 +40,33 @@ Reference any related resources here. These could include;
 
 <!-- Playground Tables -->
 ### Playgrounds
-{{tables}}
+
+| ![JavaScript] |
+| :--- |
+| {{playground.js}} |
+| {{playground.js.action}} |
+
+| ![Angular] |
+| :--- |
+| {{playground.ng}} |
+| {{playground.ng.action}} |
+
+| ![TypeScript] |
+| :--- |
+| {{playground.tsc}} |
+| {{playground.tsc.action}} |
+
+| ![Vue] |
+| :--- |
+| {{playground.vue}} |
+| {{playground.vue.action}} |
+
+| ![React] |
+| :--- |
+| {{playground.react}} |
+| {{playground.react.action}} |
+
+| ![Svelte] |
+| :--- |
+| {{playground.svelte}} |
+| {{playground.svelte.action}} |

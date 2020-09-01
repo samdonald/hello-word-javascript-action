@@ -8,6 +8,15 @@ const owner = github.context.payload.repository.owner.login;
 const issue_number = github.context.payload.issue.number;
 const repo  = github.context.payload.repository.name;
 
+const Flavours = {
+  js: "JavaScript",
+  ng: "Angular",
+  tsc: "TypeScript",
+  vue: "Vue",
+  react: "React",
+  svelte: "Svelte"
+}
+
 const getSection = text => (from, to = "") => {
   const start = text.indexOf(from) + from.length;
   return to === ""
@@ -75,34 +84,52 @@ async function projectSubmission() {
       const ios = extractPlatformSupport(body)("ios");
       const android = extractPlatformSupport(body)("android");
       const playgrounds = extractPlaygrounds(body);
+
+      const missing = flavour => `This project has no _${flavour}_ playground.`;
+
+      const action = action => flavour => `[${action === "missing" ? "add" : "update"} playground](https://github.com/mudlabs/hello-word=javascript-action/issues/new/?title=[${action}][${flavour}]%20${title}&body=%3C%21%2D%2D+Just+past+your+playground+link+below+and+press+Submit+%2D%2D%3E)`;
       
       // all minimum requirements in place
       if (title && description && playgrounds && (ios + android)) {
-        const data = 
-        `[JavaScript]: https://img.shields.io/badge/JavaScript-%E2%9C%93-F7DF1E.svg?logo=JavaScript&logoColor=F7DF1E&labelColor=000000
+        const directoryPath = `projects/${title}`;
+        const filePath = `projects/${title}/README.md`;
+        const template = await fs.promises.readFile("./.github/TEMPLATE.md");
+        const data = template.replace(/\{\{(?:[a-z]|\.)+\}\}/, match => {
+          switch (match) {
+            case "{{ios}}":
+              return ios ? "![iOS]" : "";
+            case "{{android}}":
+              return android ? "![Android]" : "";
+            case "{{title}}":
+              return title;
+            case "{{description}}":
+              return description;
+            case "{{resources}}":
+              return resources;
+            default:
+              // match is either for the playground link or action.
+              const index = match.indexOf(".");
+              const lastIndex = match.lastIndexOf(".");
+              const end = index === lastIndex ? match.indexOf("}}") : lastIndex;
+              const flavour = match.substring(index++, end);
+              const haveLink = playgrounds[flavour];
+              return index === lastIndex
+                ? haveLink ? playgrounds[flavour] : missing(Flavours[flavour])
+                : action(
+                  haveLink ? "update" : "missing")(Flavours[flavour].toLowerCase()
+                );
+          }
+        });
         
-[Playground (JavaScript)]: ${playgrounds.js}
+        const directory = await fs.promises.mkdir(directoryPath);
+        const file = await fs.promises.writeFile(filePath, data);
         
-## ${title}
-
-### Description
-${description}
-
-### Related Resources
-${resources}
-
-### Playgrounds
-| [Playground (JavaScript)] |
-| --- |
-| [![JavaScript]][Playground (JavaScript)] |`;
-
-        const directory = await fs.promises.mkdir(`projects/${title}`, { recursive: true });
-        const file = await fs.promises.writeFile(`projects/${title}/README.md`, data);
         await octokit.issues.update({
           owner,
           repo,
           issue_number,
           title: `[project] ${title}`,
+          state: "closed"
         })
       }
     } else {

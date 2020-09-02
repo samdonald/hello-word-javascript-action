@@ -41,32 +41,44 @@ Reference any related resources here. These could include;
 <!-- Playground Tables -->
 ### Playgrounds
 
-| ![JavaScript] |
-| :--- |
-| {{playground.js}} |
-| {{playground.js.action}} |
+| ![JavaScript] | {{playground.js.action}} |
+| :--- | --- : |
+> {{playground.js}}
+> {{playground.js.author}}
+> {{playground.js.contribution}}
+<br/>
 
-| ![Angular] |
-| :--- |
-| {{playground.ng}} |
-| {{playground.ng.action}} |
+| ![Angular] | {{playground.ng.action}} |
+| :--- | --- : |
+> {{playground.ng}}
+> {{playground.ng.author}}
+> {{playground.ng.contributor}}
+<br/>
 
-| ![TypeScript] |
-| :--- |
-| {{playground.tsc}} |
-| {{playground.tsc.action}} |
+| ![TypeScript] | {{playground.tsc.action}} |
+| :--- | --- : |
+> {{playground.tsc}}
+> {{playground.tsc.author}}
+> {{playground.tsc.contributor}}
+<br/>
 
-| ![Vue] |
-| :--- |
-| {{playground.vue}} |
-| {{playground.vue.action}} |
+| ![Vue] | {{playground.vue.action}} |
+| :--- | --- : |
+> {{playground.vue}}
+> {{playground.vue.author}}
+> {{playground.vue.contributor}}
+<br/>
 
-| ![React] |
-| :--- |
-| {{playground.react}} |
-| {{playground.react.action}} |
+| ![React] | {{playground.react.action}} |
+| :--- | --- : |
+> {{playground.react}}
+> {{playground.react.author}}
+> {{playground.react.contributor}}
+<br/>
 
-| ![Svelte] |
-| :--- |
-| {{playground.svelte}} |
-| {{playground.svelte.action}} |
+| ![Svelte] | {{playground.svelte.action}} |
+| :--- | --- : |
+> {{playground.svelte}}
+> {{playground.svelte.author}}
+> {{playground.svelte.contributor}}
+<br/>

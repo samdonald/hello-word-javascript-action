@@ -2,6 +2,7 @@ const core = require("@actions/core");
 const github = require("@actions/github");
 const utils = require("./utils");
 const fs = require("fs");
+const yaml = require("js-yaml");
 
 const octokit = github.getOctokit(process.env.token);
 const owner = github.context.payload.repository.owner.login;
@@ -72,6 +73,9 @@ switch (github.context.payload.action) {
     break;
 }
 
+// 1. Get all the project data from the users issue body
+// 2. Create the project directory and data.yaml file
+
 
 async function projectSubmission() {
   try {
@@ -139,6 +143,13 @@ async function projectSubmission() {
       }
     } else {
       console.log("Directory already exists");
+      const state = "closed";
+      const body = `[${title}](${projectURL}) already exits.`
+      await octokit.issues.lock({owner, repo, issue_number});
+      await octokit.issues.createComment({owner, repo, issue_number, body});
+      await octokit.issues.update({
+        owner, repo, issue_number, title: `[project][duplicate] ${title}`, state
+      });
     }
 
   } catch (error) {

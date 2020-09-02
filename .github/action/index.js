@@ -97,6 +97,7 @@ async function projectSubmission() {
         const template = await fs.promises.readFile(templatePath, { encoding: "utf-8", flag: "r"});
         
         const data = template.replace(/\{\{(?:[a-z]|\.)+\}\}/, match => {
+          console.log(match);
           switch (match) {
             case "{{ios}}":
               return ios ? "![iOS]" : "";
@@ -122,7 +123,8 @@ async function projectSubmission() {
                 );
           }
         });
-        
+        console.log(data);
+        console.log(template);
         const directory = await fs.promises.mkdir(directoryPath);
         const file = await fs.promises.writeFile(filePath, data);
         

@@ -44,31 +44,35 @@ Reference any related resources here. These could include;
 
 | ![JavaScript] | [update](https://github.com/mudlabs/hello-word=javascript-action/issues/new/?title=[update][javascript]%20Audio&body=%3C%21%2D%2D+Just+past+your+playground+link+below+and+press+Submit+%2D%2D%3E) |
 | :--- | ---: |
-- https://play.nativescript.org/?template=play-js&id=yudyse&v=2
-- Authored by [@samdonald](https://github.com/samdonald/) on _1 Sep, 2020_
+> - https://play.nativescript.org/?template=play-js&id=yudyse&v=2
+> - Authored by [@samdonald](https://github.com/samdonald/) on _1 Sep, 2020_
 
----
+<br/>
 
 | ![Angular] | [add](https://github.com/mudlabs/hello-word=javascript-action/issues/new/?title=[missing][angular]%20Audio&body=%3C%21%2D%2D+Just+past+your+playground+link+below+and+press+Submit+%2D%2D%3E) |
 | :--- | ---: |
-- This project has no _Angular_ playground.
----
+> This project has no _Angular_ playground.
+
+<br/>
 
 | ![TypeScript] | [add](https://github.com/mudlabs/hello-word=javascript-action/issues/new/?title=[missing][typescript]%20Audio&body=%3C%21%2D%2D+Just+past+your+playground+link+below+and+press+Submit+%2D%2D%3E) |
 | :--- | ---: |
-- This project has no _TypeScript_ playground.
----
+> This project has no _TypeScript_ playground.
+
+<br/>
 
 | ![Vue] | [add](https://github.com/mudlabs/hello-word=javascript-action/issues/new/?title=[missing][vue]%20Audio&body=%3C%21%2D%2D+Just+past+your+playground+link+below+and+press+Submit+%2D%2D%3E) |
 | :--- | ---: |
-- This project has no _Vue_ playground.
----
+> This project has no _Vue_ playground.
+
+<br/>
 
 | ![React] | [add](https://github.com/mudlabs/hello-word=javascript-action/issues/new/?title=[missing][react]%20Audio&body=%3C%21%2D%2D+Just+past+your+playground+link+below+and+press+Submit+%2D%2D%3E) |
 | :--- | ---: |
-- This project has no _React_ playground.
----
+> This project has no _React_ playground.
+
+<br/>
 
 | ![Svelte] | [add](https://github.com/mudlabs/hello-word=javascript-action/issues/new/?title=[missing][svelte]%20Audio&body=%3C%21%2D%2D+Just+past+your+playground+link+below+and+press+Submit+%2D%2D%3E) |
 | :--- | ---: |
-- This project has no _Svelte_ playground.
+> This project has no _Svelte_ playground.

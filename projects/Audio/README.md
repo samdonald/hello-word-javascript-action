@@ -44,8 +44,9 @@ Reference any related resources here. These could include;
 
 | ![JavaScript] | [update](https://github.com/mudlabs/hello-word=javascript-action/issues/new/?title=[update][javascript]%20Audio&body=%3C%21%2D%2D+Just+past+your+playground+link+below+and+press+Submit+%2D%2D%3E) |
 | :--- | ---: |
-> - https://play.nativescript.org/?template=play-js&id=yudyse&v=2
-> - Authored by [@samdonald](https://github.com/samdonald/) on _1 Sep, 2020_
+> https://play.nativescript.org/?template=play-js&id=yudyse&v=2
+> - Authored by [@samdonald](https://github.com/samdonald/) on _1 Sep, 2020_.
+> - Latest contribution by [@mudlabs](https://github.com/mudlabs) on 12 Sep, 2020.
 
 <br/>
 

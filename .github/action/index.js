@@ -80,7 +80,7 @@ const extractPlaygrounds = text => {
   }, {});
 }
 
-console.log(__dirname);
+console.log(__dirname, process.argv, process.cwd);
 return;
 
 switch (github.context.payload.action) {

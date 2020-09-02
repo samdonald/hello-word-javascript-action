@@ -117,10 +117,20 @@ async function projectSubmission() {
       if (title && description && playgrounds && (ios + android)) {
         const directoryPath = `projects/${title}`;
         const filePath = `projects/${title}/README.md`;
-        const templatePath = "./.github/action/TEMPLATE.md";
-        const template = await fs.promises.readFile(templatePath, { encoding: "utf-8", flag: "r"});
-        
-        const data = template.replace(/\{\{(?:[a-z]|\.)+\}\}/g, match => {
+        const yamlTemplate = await fs.promises.readFile(
+          "./.github/action/TEMPLATE.yaml",
+          { encoding: "utf-8" }
+        );
+        const yamlData = yaml.safeLoad(yamlTemplate);
+        const mdTemplate = await fs.promises.readFile(
+          "./.github/action/TEMPLATE.md", 
+          { encoding: "utf-8", flag: "r"}
+        );
+
+        yamlData.title = title;
+        console.log(yamlData);
+        return;
+        const data = mdTemplate.replace(/\{\{(?:[a-z]|\.)+\}\}/g, match => {
           switch (match) {
             case "{{ios}}":
               return ios ? "![iOS]" : "";

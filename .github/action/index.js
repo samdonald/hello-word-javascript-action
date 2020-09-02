@@ -153,11 +153,12 @@ async function projectSubmission() {
       const state = "closed";
       const url = `${github.context.payload.repository.html_url}/tree/master/projects/${title.replace(/( )/g, "%20")}`;
       const body = `[${title}](${url}) already exits.`
-      await octokit.issues.lock({owner, repo, issue_number});
-      await octokit.issues.createComment({owner, repo, issue_number, body});
       await octokit.issues.update({
         owner, repo, issue_number, title: `[project][duplicate] ${title}`, state
       });
+      await octokit.issues.createComment({owner, repo, issue_number, body});
+      await octokit.issues.lock({owner, repo, issue_number});
+
     }
 
   } catch (error) {

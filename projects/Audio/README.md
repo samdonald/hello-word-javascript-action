@@ -42,32 +42,38 @@ Reference any related resources here. These could include;
 <!-- Playground Tables -->
 ### Playgrounds
 
-| ![JavaScript] |
-| :--- |
-| https://play.nativescript.org/?template=play-js&id=yudyse&v=2 |
-| [update playground](https://github.com/mudlabs/hello-word=javascript-action/issues/new/?title=[update][javascript]%20Audio&body=%3C%21%2D%2D+Just+past+your+playground+link+below+and+press+Submit+%2D%2D%3E) |
+| ![JavaScript] | [update](https://github.com/mudlabs/hello-word=javascript-action/issues/new/?title=[update][javascript]%20Audio&body=%3C%21%2D%2D+Just+past+your+playground+link+below+and+press+Submit+%2D%2D%3E) |
+| :--- | ---: |
+> https://play.nativescript.org/?template=play-js&id=yudyse&v=2
+> - Authored by [@samdonald](https://github.com/samdonald/) on _1 Sep, 2020_.
+> - Latest contribution by [@mudlabs](https://github.com/mudlabs) on 12 Sep, 2020.
 
-| ![Angular] |
-| :--- |
-| This project has no _Angular_ playground. |
-| [add playground](https://github.com/mudlabs/hello-word=javascript-action/issues/new/?title=[missing][angular]%20Audio&body=%3C%21%2D%2D+Just+past+your+playground+link+below+and+press+Submit+%2D%2D%3E) |
+<br/>
 
-| ![TypeScript] |
-| :--- |
-| This project has no _TypeScript_ playground. |
-| [add playground](https://github.com/mudlabs/hello-word=javascript-action/issues/new/?title=[missing][typescript]%20Audio&body=%3C%21%2D%2D+Just+past+your+playground+link+below+and+press+Submit+%2D%2D%3E) |
+| ![Angular] | [add](https://github.com/mudlabs/hello-word=javascript-action/issues/new/?title=[missing][angular]%20Audio&body=%3C%21%2D%2D+Just+past+your+playground+link+below+and+press+Submit+%2D%2D%3E) |
+| :--- | ---: |
+> This project has no _Angular_ playground.
 
-| ![Vue] |
-| :--- |
-| This project has no _Vue_ playground. |
-| [add playground](https://github.com/mudlabs/hello-word=javascript-action/issues/new/?title=[missing][vue]%20Audio&body=%3C%21%2D%2D+Just+past+your+playground+link+below+and+press+Submit+%2D%2D%3E) |
+<br/>
 
-| ![React] |
-| :--- |
-| This project has no _React_ playground. |
-| [add playground](https://github.com/mudlabs/hello-word=javascript-action/issues/new/?title=[missing][react]%20Audio&body=%3C%21%2D%2D+Just+past+your+playground+link+below+and+press+Submit+%2D%2D%3E) |
+| ![TypeScript] | [add](https://github.com/mudlabs/hello-word=javascript-action/issues/new/?title=[missing][typescript]%20Audio&body=%3C%21%2D%2D+Just+past+your+playground+link+below+and+press+Submit+%2D%2D%3E) |
+| :--- | ---: |
+> This project has no _TypeScript_ playground.
 
-| ![Svelte] |
-| :--- |
-| This project has no _Svelte_ playground. |
-| [add playground](https://github.com/mudlabs/hello-word=javascript-action/issues/new/?title=[missing][svelte]%20Audio&body=%3C%21%2D%2D+Just+past+your+playground+link+below+and+press+Submit+%2D%2D%3E) |
+<br/>
+
+| ![Vue] | [add](https://github.com/mudlabs/hello-word=javascript-action/issues/new/?title=[missing][vue]%20Audio&body=%3C%21%2D%2D+Just+past+your+playground+link+below+and+press+Submit+%2D%2D%3E) |
+| :--- | ---: |
+> This project has no _Vue_ playground.
+
+<br/>
+
+| ![React] | [add](https://github.com/mudlabs/hello-word=javascript-action/issues/new/?title=[missing][react]%20Audio&body=%3C%21%2D%2D+Just+past+your+playground+link+below+and+press+Submit+%2D%2D%3E) |
+| :--- | ---: |
+> This project has no _React_ playground.
+
+<br/>
+
+| ![Svelte] | [add](https://github.com/mudlabs/hello-word=javascript-action/issues/new/?title=[missing][svelte]%20Audio&body=%3C%21%2D%2D+Just+past+your+playground+link+below+and+press+Submit+%2D%2D%3E) |
+| :--- | ---: |
+> This project has no _Svelte_ playground.

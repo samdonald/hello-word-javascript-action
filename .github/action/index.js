@@ -86,7 +86,7 @@ switch (github.context.payload.action) {
     projectSubmission();
     break;
   case "created":
-    console.log("NEW COMMENT");
+    console.log(github.context)
     break;
 }
 

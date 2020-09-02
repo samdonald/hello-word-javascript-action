@@ -80,6 +80,8 @@ const extractPlaygrounds = text => {
   }, {});
 }
 
+console.log(__dirname);
+return;
 
 switch (github.context.payload.action) {
   case "opened":
@@ -127,9 +129,6 @@ async function projectSubmission() {
           { encoding: "utf-8", flag: "r"}
         );
 
-        yamlData.title = title;
-        console.log(yamlData);
-        return;
         const data = mdTemplate.replace(/\{\{(?:[a-z]|\.)+\}\}/g, match => {
           switch (match) {
             case "{{ios}}":

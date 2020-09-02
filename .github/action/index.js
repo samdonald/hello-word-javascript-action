@@ -4,6 +4,9 @@ const utils = require("./utils");
 const fs = require("fs");
 const yaml = require("js-yaml");
 
+const yamlPath = "./.github/action/TEMPLATE.md";
+const readmePath = "./.github/action/TEMPLATE.md";
+
 const octokit = github.getOctokit(process.env.token);
 const owner = github.context.payload.repository.owner.login;
 const issue_number = github.context.payload.issue.number;
@@ -80,8 +83,6 @@ const extractPlaygrounds = text => {
   }, {});
 }
 
-console.log(process.argv, process.cwd());
-return;
 
 switch (github.context.payload.action) {
   case "opened":
@@ -102,6 +103,8 @@ async function projectSubmission() {
     const title = extractTitle(body);
 
     if (!fs.existsSync(`projects/${title}`)) {
+      console.log("file does not exist", title); return;
+      const data = await fs.promises.readFile(yamlPath, {encoding: "utf-8"});
       const description = extractDescription(body);
       const resources = extractResources(body);
       const ios = extractPlatformSupport(body)("ios");

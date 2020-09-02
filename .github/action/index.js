@@ -114,7 +114,7 @@ async function projectSubmission() {
               const index = match.indexOf(".");
               const lastIndex = match.lastIndexOf(".");
               const end = index === lastIndex ? match.indexOf("}}") : lastIndex;
-              const flavour = match.substring(index++, end);
+              const flavour = match.substring(index + 1, end);
               const haveLink = playgrounds[flavour];
               return index === lastIndex
                 ? haveLink ? playgrounds[flavour] : missing(Flavours[flavour])

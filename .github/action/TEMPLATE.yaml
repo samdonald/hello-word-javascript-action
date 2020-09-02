@@ -5,6 +5,9 @@ title:
 author:
   id:
   login:
+  avatar:
+  url:
+  date:
 description:
 resources:
 playgrounds:
@@ -13,58 +16,70 @@ playgrounds:
     author:
       id:
       login:
+      url:
       date:
     contributor:
       id:
       login:
+      url:
       date:
   ng:
     url:
     author:
       id:
       login:
+      url:
       date:
     contributor:
       id:
       login:
+      url:
       date:
   tsc:
     url:
     author:
       id:
       login:
+      url:
       date:
     contributor:
       id:
       login:
+      url:
       date:
   vue:
     url:
     author:
       id:
       login:
+      url:
       date:
     contributor:
       id:
       login:
+      url:
       date:
   react:
     url:
     author:
       id:
       login:
+      url:
       date:
     contributor:
       id:
       login:
+      url:
       date:
   svelte:
     url:
     author:
       id:
       login:
+      url:
       date:
     contributor:
       id:
       login:
+      url:
       date:

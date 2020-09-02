@@ -8,7 +8,13 @@ const octokit = github.getOctokit(process.env.token);
 const owner = github.context.payload.repository.owner.login;
 const issue_number = github.context.payload.issue.number;
 const repo  = github.context.payload.repository.name;
-console.log(github.context);
+const author = {
+  id: github.context.payload.sender.id,
+  login: github.context.payload.sender.login,
+  url: github.context.payload.sender.html_url,
+  avatar: github.context.payload.sender.avatar_url,
+  date: github.context.payload.issue.created_at
+}
 
 const Flavours = {
   js: "JavaScript",
@@ -145,7 +151,8 @@ async function projectSubmission() {
     } else {
       console.log("Directory already exists");
       const state = "closed";
-      const body = `[${title}](${projectURL}) already exits.`
+      const url = `${github.context.payload.repository.html_url}/tree/master/projects/${title.replace(/( )/g, "%20")}`;
+      const body = `[${title}](${url}) already exits.`
       await octokit.issues.lock({owner, repo, issue_number});
       await octokit.issues.createComment({owner, repo, issue_number, body});
       await octokit.issues.update({

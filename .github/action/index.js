@@ -57,7 +57,7 @@ const extractPlaygrounds = text => {
   return playgrounds.reduce((obj, item) => {
     const start = item.indexOf("play-") + 5;
     const flavour = item.substring(start, item.indexOf("&id"));
-    obj[flavour] = item;
+    obj[flavour] = `https://${item}`;
     return obj;
   }, {});
 }
@@ -87,7 +87,10 @@ async function projectSubmission() {
 
       const missing = flavour => `This project has no _${flavour}_ playground.`;
 
-      const action = action => flavour => `[${action === "missing" ? "add" : "update"} playground](https://github.com/mudlabs/hello-word=javascript-action/issues/new/?title=[${action}][${flavour}]%20${title}&body=%3C%21%2D%2D+Just+past+your+playground+link+below+and+press+Submit+%2D%2D%3E)`;
+      const action = action => flavour => {
+        const formattedTitle = title.replace(/( )/g, "+");
+        return `[${action === "missing" ? "add" : "update"} playground](https://github.com/mudlabs/hello-word=javascript-action/issues/new/?title=[${action}][${flavour}]%20${formattedTitle}&body=%3C%21%2D%2D+Just+past+your+playground+link+below+and+press+Submit+%2D%2D%3E)`
+      };
       
       // all minimum requirements in place
       if (title && description && playgrounds && (ios + android)) {
@@ -97,7 +100,6 @@ async function projectSubmission() {
         const template = await fs.promises.readFile(templatePath, { encoding: "utf-8", flag: "r"});
         
         const data = template.replace(/\{\{(?:[a-z]|\.)+\}\}/g, match => {
-          console.log(match);
           switch (match) {
             case "{{ios}}":
               return ios ? "![iOS]" : "";
@@ -123,8 +125,7 @@ async function projectSubmission() {
                 );
           }
         });
-        console.log(data);
-        console.log(template);
+
         const directory = await fs.promises.mkdir(directoryPath);
         const file = await fs.promises.writeFile(filePath, data);
         

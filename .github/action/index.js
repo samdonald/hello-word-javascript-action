@@ -8,6 +8,7 @@ const octokit = github.getOctokit(process.env.token);
 const owner = github.context.payload.repository.owner.login;
 const issue_number = github.context.payload.issue.number;
 const repo  = github.context.payload.repository.name;
+console.log(github.context);
 
 const Flavours = {
   js: "JavaScript",

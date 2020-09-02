@@ -13,7 +13,7 @@ const author = {
   login: github.context.payload.sender.login,
   url: github.context.payload.sender.html_url,
   avatar: github.context.payload.sender.avatar_url,
-  date: github.context.payload.issue.created_at
+  date: getDateString(github.context.payload.issue.created_at)
 }
 
 const Flavours = {
@@ -23,6 +23,16 @@ const Flavours = {
   vue: "Vue",
   react: "React",
   svelte: "Svelte"
+}
+
+function getDateString(created) {
+  // "2020-09-02T"
+  const data = created.substring(0, created.indexOf("T")).split("-");
+  const date = new Date(data[0], data[1] - 1, data[2]);
+  return date.toLocaleDateString(
+    "en-AU", 
+    { day: "numeric", month: "short", year: "numeric"}
+  );
 }
 
 const getSection = text => (from, to = "") => {
@@ -149,14 +159,21 @@ async function projectSubmission() {
         })
       }
     } else {
-      console.log("Directory already exists");
-      const state = "closed";
-      const url = `${github.context.payload.repository.html_url}/tree/master/projects/${title.replace(/( )/g, "%20")}`;
-      const body = `[${title}](${url}) already exits.`
-      await octokit.issues.update({
-        owner, repo, issue_number, title: `[project][duplicate] ${title}`, state
+      console.log("Directory already exists");     
+      await octokit.issues.createComment({
+        owner, 
+        repo, 
+        issue_number, 
+        body: `@${author.login}, the project [${title}](${github.context.payload.repository.html_url}/tree/master/projects/${title.replace(/( )/g, "%20")}) already exits. If you wanted to update/add a playground to this project please do so via the link provided in the project README.md`
       });
-      await octokit.issues.createComment({owner, repo, issue_number, body});
+      await octokit.issues.update({
+        owner, 
+        repo, 
+        issue_number, 
+        title: `[project][duplicate] ${title}`, 
+        state: "closed",
+        labels: ["duplicate"]
+      });
       await octokit.issues.lock({owner, repo, issue_number});
 
     }

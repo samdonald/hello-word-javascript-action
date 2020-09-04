@@ -10,14 +10,14 @@ env:
   token: ${{ secrets.GITHUB_TOKEN }}
 
 jobs:
-  world:
+  project:
     runs-on: ubuntu-latest
     if: startsWith(github.event.issue.title, '[project]')
-    name: Reply
+    name: Project
     steps:
       - uses: actions/checkout@v2
-      - name: Reply action
-        id: reply
+      - name: Project Submission
+        id: project
         uses: ./.github/action
       - name: Add & Commit
         # if: there's a new project file to add to the remote repo master branch

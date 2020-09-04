@@ -103,8 +103,6 @@ async function projectSubmission() {
     const title = extractTitle(body);
 
     if (!fs.existsSync(`projects/${title}`)) {
-      console.log("file does not exist", title); return;
-      const data = await fs.promises.readFile(yamlPath, {encoding: "utf-8"});
       const description = extractDescription(body);
       const resources = extractResources(body);
       const ios = extractPlatformSupport(body)("ios");
@@ -122,46 +120,81 @@ async function projectSubmission() {
       if (title && description && playgrounds && (ios + android)) {
         const directoryPath = `projects/${title}`;
         const filePath = `projects/${title}/README.md`;
-        const yamlTemplate = await fs.promises.readFile(
-          "./.github/action/TEMPLATE.yaml",
-          { encoding: "utf-8" }
-        );
-        const yamlData = yaml.safeLoad(yamlTemplate);
-        const mdTemplate = await fs.promises.readFile(
-          "./.github/action/TEMPLATE.md", 
-          { encoding: "utf-8", flag: "r"}
-        );
+        const file = await fs.promises.readFile(yamlPath, {encoding: "utf-8"});
+        const data = yaml.safeLoad(file);
 
-        const data = mdTemplate.replace(/\{\{(?:[a-z]|\.)+\}\}/g, match => {
-          switch (match) {
-            case "{{ios}}":
-              return ios ? "![iOS]" : "";
-            case "{{android}}":
-              return android ? "![Android]" : "";
-            case "{{title}}":
-              return title;
-            case "{{description}}":
-              return description;
-            case "{{resources}}":
-              return resources;
-            default:
-              // match is either for the playground link or action.
-              const index = match.indexOf(".");
-              const lastIndex = match.lastIndexOf(".");
-              const end = index === lastIndex ? match.indexOf("}}") : lastIndex;
-              const flavour = match.substring(index + 1, end);
-              const haveLink = playgrounds[flavour];
-              return index === lastIndex
-                ? haveLink ? playgrounds[flavour] : missing(Flavours[flavour])
-                : action(
-                  haveLink ? "update" : "missing")(Flavours[flavour].toLowerCase()
-                );
+        const setPlaygroundData = name => plagrounds => {
+          const url = playgrounds[name];
+          return {
+            url,
+            author: url ? {
+              id: github.context.payload.sender.id,
+              url: github.context.payload.sender.html_url,
+              login: github.context.payload.sender.name,
+              date: author.date
+            } : null,
+            contributor: null
           }
-        });
+        }
 
-        const directory = await fs.promises.mkdir(directoryPath);
-        const file = await fs.promises.writeFile(filePath, data);
+        data.issue = github.context.payload.issue.number;
+        data.ios = ios;
+        data.android = android;
+        data.title = title;
+        data.author = {
+          id: github.context.payload.sender.id,
+          login: github.context.payload.sender.login,
+          url: github.context.payload.sender.html_url,
+          avatar: github.context.payload.sender.avatar_url,
+          date: getDateString(github.context.payload.issue.created_at)
+        };
+        data.description = description;
+        data.resources = resources;
+        data.playgrounds = {
+          js: setPlaygroundData("js")(playgrounds),
+          ng: setPlaygroundData("ng")(playgrounds),
+          tsc: setPlaygroundData("tsc")(playgrounds),
+          vue: setPlaygroundData("vue")(playgrounds),
+          react: setPlaygroundData("react")(playgrounds),
+          svelte: setPlaygroundData("svelte")(playgrounds),
+        }
         
+        // const mdTemplate = await fs.promises.readFile(
+        //   "./.github/action/TEMPLATE.md", 
+        //   { encoding: "utf-8", flag: "r"}
+        // );
+
+        // const data = mdTemplate.replace(/\{\{(?:[a-z]|\.)+\}\}/g, match => {
+        //   switch (match) {
+        //     case "{{ios}}":
+        //       return ios ? "![iOS]" : "";
+        //     case "{{android}}":
+        //       return android ? "![Android]" : "";
+        //     case "{{title}}":
+        //       return title;
+        //     case "{{description}}":
+        //       return description;
+        //     case "{{resources}}":
+        //       return resources;
+        //     default:
+        //       // match is either for the playground link or action.
+        //       const index = match.indexOf(".");
+        //       const lastIndex = match.lastIndexOf(".");
+        //       const end = index === lastIndex ? match.indexOf("}}") : lastIndex;
+        //       const flavour = match.substring(index + 1, end);
+        //       const haveLink = playgrounds[flavour];
+        //       return index === lastIndex
+        //         ? haveLink ? playgrounds[flavour] : missing(Flavours[flavour])
+        //         : action(
+        //           haveLink ? "update" : "missing")(Flavours[flavour].toLowerCase()
+        //         );
+        //   }
+        // });
+
+        const projectYamle = yaml.safeDump(data);
+        const directory = await fs.promises.mkdir(directoryPath);
+        // const file = await fs.promises.writeFile(filePath, data);
+        await fs.promises.writeFile(`projects/${title}/data.yaml`);
         await octokit.issues.update({
           owner,
           repo,

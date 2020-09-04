@@ -4,7 +4,7 @@ const utils = require("./utils");
 const fs = require("fs");
 const yaml = require("js-yaml");
 
-const yamlPath = "./.github/action/TEMPLATE.md";
+const yamlPath = "./.github/action/TEMPLATE.yaml";
 const readmePath = "./.github/action/TEMPLATE.md";
 
 const octokit = github.getOctokit(process.env.token);

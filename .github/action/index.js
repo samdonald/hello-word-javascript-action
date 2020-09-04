@@ -194,7 +194,7 @@ async function projectSubmission() {
         const projectYamle = yaml.safeDump(data);
         const directory = await fs.promises.mkdir(directoryPath);
         // const file = await fs.promises.writeFile(filePath, data);
-        await fs.promises.writeFile(`projects/${title}/data.yaml`);
+        await fs.promises.writeFile(`projects/${title}/data.yaml`, projectYamle);
         await octokit.issues.update({
           owner,
           repo,

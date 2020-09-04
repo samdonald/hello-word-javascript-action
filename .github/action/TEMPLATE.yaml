@@ -2,15 +2,15 @@ issue:
 ios:
 android:
 title:
-author:
-  id:
-  login:
-  avatar:
-  url:
+author: 
+  id: 
+  login: 
+  avatar: 
+  url: 
   date:
-description:
-resources:
-playgrounds:
+description: 
+resources: 
+playgrounds: 
   js:
     flavour: "JavaScript"
     url:

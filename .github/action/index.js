@@ -121,10 +121,7 @@ async function projectSubmission() {
         const directoryPath = `projects/${title}`;
         const filePath = `projects/${title}/README.md`;
         const file = await fs.promises.readFile(yamlPath, {encoding: "utf-8"});
-        console.log(file);
         const data = yaml.safeLoad(file);
-        console.log(data);
-        return;
 
         const setPlaygroundData = name => plagrounds => {
           const url = playgrounds[name];

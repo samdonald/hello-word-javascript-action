@@ -240,10 +240,11 @@ async function buildProjectYml(data) {
         date: getDateString(github.context.payload.issue.created_at)
     }
     const buildPlayground = name => playgrounds => ({
-        url: playgrounds && playgrounds[name]  ? playgrounds[name] : null,
+        url: playgrounds && playgrounds[name] ? playgrounds[name] : null,
         author: playgrounds && playgrounds[name] ? author : null,
         contributor: null
     });
+    console.log(data.plagrounds, data.playgrounds["js"])
     const yml = yaml.safeDump({
       issue: github.context.payload.issue.number,
       ios: data.ios,

@@ -36,6 +36,7 @@ const core = require("@actions/core");
           const close = match.indexOf("}}");
           const flavour = match.substring(index + 1, same ? close : lastIndex);
           const playground = data.playgrounds[flavour];
+          let login, url, date;
 
           switch (match) {
             case `{{playground.${flavour}.action}}`:
@@ -47,16 +48,16 @@ const core = require("@actions/core");
                 ? `> ${playground.url}` 
                 : `> This project has no _${playground.flavour}_ playground.`
             case `{{playground.${flavour}.author}}`:
-              const authorLogin = playground.author.login;
-              const url = `https://github.com/${authorLogin}`;
-              const date = playground.author.date;
+              login = playground.author.login;
+              url = `https://github.com/${login}`;
+              date = playground.author.date;
               return playground.author 
-                ? `> - Authored by [@${authorLogin}](${url}) on _${date}_.` 
+                ? `> - Authored by [@${login}](${url}) on _${date}_.` 
                 : "";
             case `{{playground.${flavour}.contributor}}`:
-              const login = playground.contributor.login;
-              const url = `https://github.com/${login}`;
-              const date = playground.contributor.date;
+              login = playground.contributor.login;
+              url = `https://github.com/${login}`;
+              date = playground.contributor.date;
               return playground.contributor 
                 ? `> - Last contribution by [@${login}](${url}) on _${date}_.` 
                 : "";

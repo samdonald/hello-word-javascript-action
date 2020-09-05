@@ -9,6 +9,8 @@ const core = require("@actions/core");
       return `[${action}](https://github.com/mudlabs/hello-word=javascript-action/issues/new/?title=[${action}][${type}]%20${title}&body=%3C%21%2D%2D+Just+past+your+playground+link+below+and+press+Submit+%2D%2D%3E)`
     };
 
+    const userOnDate = user => `[@${user.login}](https://github.com/${user.login}) on _${user.date}_.`;
+
     const projectDirectory = "Test 17"; // need to get this from variable
     const file = await fs.promises.readFile("projects/Test 17/data.yaml");
     const template = await fs.promises.readFile(
@@ -50,18 +52,12 @@ const core = require("@actions/core");
                 ? `> ${playground.url}` 
                 : `> This project has no _${playground.flavour}_ playground.`
             case `{{playground.${flavour}.author}}`:
-              login = playground.author.login;
-              url = `https://github.com/${login}`;
-              date = playground.author.date;
-              return playground.author 
-                ? `> - Authored by [@${login}](${url}) on _${date}_.` 
+              return playground.author
+                ? `> - Authored by ${userOnDate(playground.author)}`
                 : "";
             case `{{playground.${flavour}.contributor}}`:
-              login = playground.contributor.login;
-              url = `https://github.com/${login}`;
-              date = playground.contributor.date;
               return playground.contributor 
-                ? `> - Last contribution by [@${login}](${url}) on _${date}_.` 
+                ? `> - Last contribution by ${userOnDate(playground.contributor)}.` 
                 : "";
           }
       }

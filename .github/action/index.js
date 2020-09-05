@@ -4,8 +4,6 @@ const utils = require("./utils");
 const fs = require("fs");
 const yaml = require("js-yaml");
 
-const yamlPath = "./.github/action/TEMPLATE.yaml";
-const readmePath = "./.github/action/TEMPLATE.md";
 
 const octokit = github.getOctokit(process.env.token);
 const owner = github.context.payload.repository.owner.login;
@@ -118,48 +116,16 @@ async function projectSubmission() {
       
       // all minimum requirements in place
       if (title && description && playgrounds && (ios + android)) {
-        buildProjectYml({title,ios,android,description,resources,playgrounds});
-        return;
         const directoryPath = `projects/${title}`;
-        const filePath = `projects/${title}/README.md`;
-        const file = await fs.promises.readFile(yamlPath, {encoding: "utf-8"});
-        const data = yaml.safeLoad(file);
-
-        const setPlaygroundData = name => plagrounds => {
-          const url = playgrounds[name];
-          return {
-            url,
-            author: url ? {
-              id: github.context.payload.sender.id,
-              url: github.context.payload.sender.html_url,
-              login: github.context.payload.sender.name,
-              date: author.date
-            } : null,
-            contributor: null
-          }
-        }
-
-        data.issue = github.context.payload.issue.number;
-        data.ios = ios;
-        data.android = android;
-        data.title = title;
-        data.author = {
-          id: github.context.payload.sender.id,
-          login: github.context.payload.sender.login,
-          url: github.context.payload.sender.html_url,
-          avatar: github.context.payload.sender.avatar_url,
-          date: getDateString(github.context.payload.issue.created_at)
-        };
-        data.description = description;
-        data.resources = resources;
-        data.playgrounds = {
-          js: setPlaygroundData("js")(playgrounds),
-          ng: setPlaygroundData("ng")(playgrounds),
-          tsc: setPlaygroundData("tsc")(playgrounds),
-          vue: setPlaygroundData("vue")(playgrounds),
-          react: setPlaygroundData("react")(playgrounds),
-          svelte: setPlaygroundData("svelte")(playgrounds),
-        }
+        const filePath = `${directoryPath}/data.yaml`;
+        const projectYAML = buildProjectYml({
+          title, ios, android, description, resources, playgrounds
+        });
+        const directory = await fs.promises.mkdir(directoryPath);
+        const file = await fs.promises.writeFile(filePath, projectYAML)
+        core.saveState("README", "ready");
+        core.saveState("PROJECT", title);
+        return;
         
         // const mdTemplate = await fs.promises.readFile(
         //   "./.github/action/TEMPLATE.md", 
@@ -211,7 +177,7 @@ async function projectSubmission() {
         owner, 
         repo, 
         issue_number, 
-        body: `@${author.login}, the project [${title}](${github.context.payload.repository.html_url}/tree/master/projects/${title.replace(/( )/g, "%20")}) already exits. If you wanted to update/add a playground to this project please do so via the link provided in the project README.md`
+        body: `@${author.login}, the project [${title}](${github.context.payload.repository.html_url}/tree/master/projects/${title.replace(/( )/g, "%20")}) already exits. If you wanted to update/add a playground to this project please do so via the link provided in the project README.`
       });
       await octokit.issues.update({
         owner, 
@@ -230,22 +196,20 @@ async function projectSubmission() {
   }
 }
 
-async function buildProjectYml(data) {
+function buildProjectYml(data) {
   try {
     const author = {
       id: github.context.payload.sender.id,
-        login: github.context.payload.sender.login,
-        avatar: github.context.payload.sender.avatar_url,
-        url: github.context.payload.sender.html_url,
-        date: getDateString(github.context.payload.issue.created_at)
+      login: github.context.payload.sender.login,
+      date: getDateString(github.context.payload.issue.created_at)
     }
     const buildPlayground = name => playgrounds => ({
+        flavour: Flavours[name],
         url: playgrounds && playgrounds[name] ? playgrounds[name] : null,
         author: playgrounds && playgrounds[name] ? author : null,
         contributor: null
     });
-    console.log(data.playgrounds, data.playgrounds["js"])
-    const yml = yaml.safeDump({
+    return yaml.safeDump({
       issue: github.context.payload.issue.number,
       ios: data.ios,
       android: data.android,
@@ -262,8 +226,6 @@ async function buildProjectYml(data) {
         svelte: buildPlayground("svelte")(data.playgrounds),
       }
     });
-    console.log(yml);
-    return yml;
   } catch(e) {
     console.log(e);
   }

@@ -43,42 +43,42 @@ Reference any related resources here. These could include;
 
 | ![JavaScript] | {{playground.js.action}} |
 | :--- | --- : |
-> {{playground.js}}
+> {{playground.js.url}}
 > {{playground.js.author}}
 > {{playground.js.contribution}}
 <br/>
 
 | ![Angular] | {{playground.ng.action}} |
 | :--- | --- : |
-> {{playground.ng}}
+> {{playground.ng.url}}
 > {{playground.ng.author}}
 > {{playground.ng.contributor}}
 <br/>
 
 | ![TypeScript] | {{playground.tsc.action}} |
 | :--- | --- : |
-> {{playground.tsc}}
+> {{playground.tsc.url}}
 > {{playground.tsc.author}}
 > {{playground.tsc.contributor}}
 <br/>
 
 | ![Vue] | {{playground.vue.action}} |
 | :--- | --- : |
-> {{playground.vue}}
+> {{playground.vue.url}}
 > {{playground.vue.author}}
 > {{playground.vue.contributor}}
 <br/>
 
 | ![React] | {{playground.react.action}} |
 | :--- | --- : |
-> {{playground.react}}
+> {{playground.react.url}}
 > {{playground.react.author}}
 > {{playground.react.contributor}}
 <br/>
 
 | ![Svelte] | {{playground.svelte.action}} |
 | :--- | --- : |
-> {{playground.svelte}}
+> {{playground.svelte.url}}
 > {{playground.svelte.author}}
 > {{playground.svelte.contributor}}
 <br/>

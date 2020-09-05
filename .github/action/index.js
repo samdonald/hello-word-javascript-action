@@ -231,40 +231,39 @@ async function projectSubmission() {
 }
 
 async function buildProjectYml(data) {
-  const buildPlayground = name => playgrounds => ({
-      url: playgrounds ? playgrounds[name] : null,
-      author: playgrounds && playgrounds[name] ? {
-        id: github.context.payload.sender.id,
+  try {
+    const author = {
+      id: github.context.payload.sender.id,
         login: github.context.payload.sender.login,
         avatar: github.context.payload.sender.avatar_url,
         url: github.context.payload.sender.html_url,
         date: getDateString(github.context.payload.issue.created_at)
-      } : null,
-      contributor: null
-  });
-  const yml = yaml.safeDump({
-    issue: github.context.payload.issue.number,
-    ios: data.ios,
-    android: data.android,
-    title: data.title,
-    author: {
-      id: github.context.payload.sender.id,
-      login: github.context.payload.sender.login,
-      avatar: github.context.payload.sender.avatar_url,
-      url: github.context.payload.sender.html_url,
-      date: getDateString(github.context.payload.issue.created_at)
-    },
-    description: data.description,
-    resources: data.resources,
-    playgrounds: {
-      js: buildPlayground("js")(data.plagrounds),
-      ng: buildPlayground("ng")(data.playgrounds),
-      tsc: buildPlayground("tsc")(data.playgrounds),
-      vue: buildPlayground("vue")(data.playgrounds),
-      react: buildPlayground("react")(data.playgrounds),
-      svelte: buildPlayground("svelte")(data.playgrounds)
     }
-  });
-  console.log(yml);
-  return yml;
+    const buildPlayground = name => playgrounds => ({
+        url: playgrounds ? playgrounds[name] : null,
+        author: playgrounds && playgrounds[name] ? author : null,
+        contributor: null
+    });
+    const yml = yaml.safeDump({
+      issue: github.context.payload.issue.number,
+      ios: data.ios,
+      android: data.android,
+      title: data.title,
+      author: author,
+      description: data.description,
+      resources: data.resources,
+      playgrounds: {
+        js: buildPlayground("js")(data.plagrounds),
+        ng: buildPlayground("ng")(data.playgrounds),
+        tsc: buildPlayground("tsc")(data.playgrounds),
+        vue: buildPlayground("vue")(data.playgrounds),
+        react: buildPlayground("react")(data.playgrounds),
+        svelte: buildPlayground("svelte")(data.playgrounds)
+      }
+    });
+    console.log(yml);
+    return yml;
+  } catch(error) {
+    console.log(errro);
+  }
 }

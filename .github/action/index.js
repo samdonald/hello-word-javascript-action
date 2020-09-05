@@ -101,7 +101,7 @@ async function projectSubmission() {
   try {
     const body = utils.stripComments(github.context.payload.issue.body);
     const title = extractTitle(body);
-    buildProjectData({titls, ios:true,android:false,description:"This is my description", resources: null});return;
+    buildProjectData({title, ios:true,android:false,description:"This is my description", resources: null});return;
     if (!fs.existsSync(`projects/${title}`)) {
       const description = extractDescription(body);
       const resources = extractResources(body);

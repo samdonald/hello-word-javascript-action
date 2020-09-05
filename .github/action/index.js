@@ -240,7 +240,7 @@ async function buildProjectYml(data) {
         date: getDateString(github.context.payload.issue.created_at)
     }
     const buildPlayground = name => playgrounds => ({
-        url: playgrounds ? playgrounds[name] : null,
+        url: playgrounds && playgrounds[name]  ? playgrounds[name] : null,
         author: playgrounds && playgrounds[name] ? author : null,
         contributor: null
     });
@@ -253,16 +253,12 @@ async function buildProjectYml(data) {
       description: data.description,
       resources: data.resources,
       playgrounds: {
-        js: {
-          url: data.playgrounds.js,
-          author: data.playgrounds.js ? author : null,
-          contributor: null
-        },
-        ng: {
-          url: data.playgrounds.ng || null,
-          author: data.playgrounds.ng ? author : null,
-          contributor: null
-        }
+        js: buildPlayground("js")(data.plagrounds),
+        ng: buildPlayground("ng")(data.plagrounds),
+        tsc: buildPlayground("tsc")(data.plagrounds),
+        vue: buildPlayground("vue")(data.plagrounds),
+        react: buildPlayground("react")(data.plagrounds),
+        svelte: buildPlayground("svelte")(data.plagrounds),
       }
     });
     console.log(yml);

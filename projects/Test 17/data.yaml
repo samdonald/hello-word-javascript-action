@@ -1,0 +1,41 @@
+issue: 144
+ios: true
+android: true
+title: Test 17
+author: &ref_0
+  id: 32623552
+  login: mudlabs
+  date: 'Sep 5, 2020'
+description: "Shows how to connect to a social network for app user login\r\n - Facebook etc..."
+resources: ''
+playgrounds:
+  js:
+    flavour: JavaScript
+    url: 'https://play.nativescript.org/?template=play-js&id=yudyse&v=2'
+    author: *ref_0
+    contributor: null
+  ng:
+    flavour: Angular
+    url: null
+    author: null
+    contributor: null
+  tsc:
+    flavour: TypeScript
+    url: null
+    author: null
+    contributor: null
+  vue:
+    flavour: Vue
+    url: null
+    author: null
+    contributor: null
+  react:
+    flavour: React
+    url: null
+    author: null
+    contributor: null
+  svelte:
+    flavour: Svelte
+    url: null
+    author: null
+    contributor: null

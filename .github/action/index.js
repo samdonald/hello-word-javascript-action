@@ -259,7 +259,7 @@ async function buildProjectYml(data) {
           contributor: null
         },
         ng: {
-          url: data.playgrounds.ng,
+          url: data.playgrounds.ng || null,
           author: data.playgrounds.ng ? author : null,
           contributor: null
         }

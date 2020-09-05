@@ -234,17 +234,14 @@ async function buildProjectYml(data) {
   try {
     console.log(
       yaml.safeDump({
-        issue: 3,
-        author: {
-          id: 4,
-          name: "mudlabs"
+        "issue": 3,
+        "&author author": {
+          "id": 4,
+          "name": "mudlabs"
         },
-        projects: {
-          js: {
-            author: {
-              id: 4,
-              name: "mudlabs"
-            }
+        "projects": {
+          "js": {
+            "author": "*author"
           }
         }
       })

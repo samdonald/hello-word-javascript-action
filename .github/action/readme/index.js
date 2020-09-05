@@ -10,7 +10,8 @@ const core = require("@actions/core");
     };
 
     const projectDirectory = "Test 17"; // need to get this from variable
-    const data = yaml.safeLoad(`./projects/Test 17/data.yaml`);
+    const file = fs.promises.readFile("projects/Test 17/data.yaml");
+    const data = yaml.safeLoad(file);
     const template = await fs.promises.readFile(
       "./.github/action/TEMPLATE.md",
       { encoding: "utf-8", flag: "r" }

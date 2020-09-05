@@ -101,7 +101,7 @@ async function projectSubmission() {
   try {
     const body = utils.stripComments(github.context.payload.issue.body);
     const title = extractTitle(body);
-
+    buildProjectData();return;
     if (!fs.existsSync(`projects/${title}`)) {
       const description = extractDescription(body);
       const resources = extractResources(body);
@@ -226,4 +226,32 @@ async function projectSubmission() {
   } catch (error) {
     console.log(error);
   }
+}
+
+async function buildProjectData() {
+  const data = yaml.safeDump({
+    issue: github.context.payload.issue.number,
+    ios: false,
+    android: true,
+    title: "My Project",
+    author: {
+      id: "jsdfjhsdfosf",
+      login: "mudlabs",
+      avatar: "https://jsdnfjlsdnf",
+      url: "",
+      date: "3 Sep, 2020"
+    },
+    description: "",
+    resources: "",
+    playgrounds: {
+      js: {},
+      ng: {},
+      tsc: {},
+      vue: {},
+      react: {},
+      svelte: {}
+    }
+  });
+  console.log(data);
+  return;
 }

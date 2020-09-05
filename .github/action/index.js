@@ -126,50 +126,6 @@ async function projectSubmission() {
         core.saveState("README", "ready");
         core.saveState("PROJECT", title);
         return;
-        
-        // const mdTemplate = await fs.promises.readFile(
-        //   "./.github/action/TEMPLATE.md", 
-        //   { encoding: "utf-8", flag: "r"}
-        // );
-
-        // const data = mdTemplate.replace(/\{\{(?:[a-z]|\.)+\}\}/g, match => {
-        //   switch (match) {
-        //     case "{{ios}}":
-        //       return ios ? "![iOS]" : "";
-        //     case "{{android}}":
-        //       return android ? "![Android]" : "";
-        //     case "{{title}}":
-        //       return title;
-        //     case "{{description}}":
-        //       return description;
-        //     case "{{resources}}":
-        //       return resources;
-        //     default:
-        //       // match is either for the playground link or action.
-        //       const index = match.indexOf(".");
-        //       const lastIndex = match.lastIndexOf(".");
-        //       const end = index === lastIndex ? match.indexOf("}}") : lastIndex;
-        //       const flavour = match.substring(index + 1, end);
-        //       const haveLink = playgrounds[flavour];
-        //       return index === lastIndex
-        //         ? haveLink ? playgrounds[flavour] : missing(Flavours[flavour])
-        //         : action(
-        //           haveLink ? "update" : "missing")(Flavours[flavour].toLowerCase()
-        //         );
-        //   }
-        // });
-
-        const projectYamle = yaml.safeDump(data);
-        const directory = await fs.promises.mkdir(directoryPath);
-        // const file = await fs.promises.writeFile(filePath, data);
-        await fs.promises.writeFile(`projects/${title}/data.yaml`, projectYamle);
-        await octokit.issues.update({
-          owner,
-          repo,
-          issue_number,
-          title: `[project] ${title}`,
-          state: "closed"
-        })
       }
     } else {
       console.log("Directory already exists");     

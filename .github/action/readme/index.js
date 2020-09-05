@@ -1,15 +1,21 @@
 const fs = require("fs");
 const yaml = require("js-yaml");
-const core = require("@actions/core");
+const github = require("@actions/github");
 
 (async function(){
   try { 
     const setProjectAction = project => action => type => {
       const title = project.replace(/( )/g, "+");
-      return `[${action}](https://github.com/mudlabs/hello-word=javascript-action/issues/new/?title=[${action}][${type}]%20${title}&body=%3C%21%2D%2D+Just+past+your+playground+link+below+and+press+Submit+%2D%2D%3E)`
+      const repo = github.context.payload.repository.html_url;
+      return `[${action}](${repo}/issues/new/?title=[${action}][${type}]%20${title}&body=%3C%21%2D%2D+Just+past+your+playground+link+below+and+press+Submit+%2D%2D%3E)`
     };
 
-    const userOnDate = user => `[@${user.login}](https://github.com/${user.login}) on _${user.date}_.`;
+    const userOnDate = user => {
+      const usercontent = "https://avatars3.githubusercontent.com/u";
+      const avatar = `${usercontent}/${user.id}?s=60&v=4`;
+      const img = `<img src="${avatar}" width="21" align="center"/>`;
+      return `[${img} @${user.login}](https://github.com/${user.login}) on _${user.date}_.`;
+    };
 
     const projectDirectory = "Test 17"; // need to get this from variable
     const file = await fs.promises.readFile("projects/Test 17/data.yaml");
@@ -25,9 +31,9 @@ const core = require("@actions/core");
     const readme = template.replace(/\{\{(?:[a-z]|\.)+\}\}/g, match => {
       switch (match) {
         case "{{ios}}":
-          return data.ios ? "![iOS]" : "";
+          return data.ios ? "![ios-badge]" : "";
         case "{{android}}":
-          return data.android ? "![Android]" : "";
+          return data.android ? "![android-badge]" : "";
         case "{{title}}":
           return data.title
         case "{{description}}":
@@ -40,7 +46,6 @@ const core = require("@actions/core");
           const lastIndex = match.lastIndexOf(".");
           const flavour = match.substring(index + 1, lastIndex);
           const playground = data.playgrounds[flavour];
-          let login, url, date;
 
           switch (match) {
             case `{{playground.${flavour}.action}}`:
@@ -57,7 +62,7 @@ const core = require("@actions/core");
                 : "";
             case `{{playground.${flavour}.contributor}}`:
               return playground.contributor 
-                ? `- Last contribution by ${userOnDate(playground.contributor)}.` 
+                ? `- Last contribution by ${userOnDate(playground.contributor)}` 
                 : "";
           }
       }

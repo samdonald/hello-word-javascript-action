@@ -1,11 +1,11 @@
-[JavaScript]: https://img.shields.io/badge/JavaScript-%E2%9C%93-F7DF1E.svg?logo=JavaScript&logoColor=F7DF1E&labelColor=000000
-[TypeScript]: https://img.shields.io/badge/TypeScript-%E2%9C%93-007ACC.svg?logo=TypeScript&logoColor=007ACC&labelColor=000000
-[Angular]: https://img.shields.io/badge/Angular-%E2%9C%93-DD0031.svg?logo=Angular&logoColor=DD0031&labelColor=000000
-[Vue]: https://img.shields.io/badge/Vue.js-%E2%9C%93-4FC08D.svg?logo=Vue.js&logoColor=4FC08D&labelColor=000000
-[React]: https://img.shields.io/badge/React-%E2%9C%93-33d8ff.svg?logo=React&logoColor=33d8ff&labelColor=000000
-[Svelte]: https://img.shields.io/badge/Svelte-%E2%9C%93-f93e02.svg?logo=Svelte&logoColor=f93e02&labelColor=000000
-[iOS]: https://img.shields.io/badge/ios-%E2%9C%93-949393.svg?logo=apple&logoColor=white
-[Android]: https://img.shields.io/badge/android-%E2%9C%93-949393.svg?logo=android&logoColor=white
+[javascript-badge]: https://img.shields.io/badge/JavaScript-%E2%9C%93-F7DF1E.svg?logo=JavaScript&logoColor=F7DF1E&labelColor=000000
+[typescript-badge]: https://img.shields.io/badge/TypeScript-%E2%9C%93-007ACC.svg?logo=TypeScript&logoColor=007ACC&labelColor=000000
+[angular-badge]: https://img.shields.io/badge/Angular-%E2%9C%93-DD0031.svg?logo=Angular&logoColor=DD0031&labelColor=000000
+[vue-badge]: https://img.shields.io/badge/Vue.js-%E2%9C%93-4FC08D.svg?logo=Vue.js&logoColor=4FC08D&labelColor=000000
+[react-badge]: https://img.shields.io/badge/React-%E2%9C%93-33d8ff.svg?logo=React&logoColor=33d8ff&labelColor=000000
+[svelte-badge]: https://img.shields.io/badge/Svelte-%E2%9C%93-f93e02.svg?logo=Svelte&logoColor=f93e02&labelColor=000000
+[ios-badge]: https://img.shields.io/badge/ios-%E2%9C%93-949393.svg?logo=apple&logoColor=white
+[android-badge]: https://img.shields.io/badge/android-%E2%9C%93-949393.svg?logo=android&logoColor=white
 
 
 <!-- Platform Support (i.e. ![ios]) -->
@@ -41,42 +41,42 @@ Reference any related resources here. These could include;
 <!-- Playground Tables -->
 ### Playgrounds
 
-| ![JavaScript] | {{playground.js.action}} |
+| [![JavaScript][javascript-badge]]({{playground.js.url}}) | {{playground.js.action}} |
 | :--- | ---: |
 > {{playground.js.url}}
 > {{playground.js.author}}
 > {{playground.js.contribution}}
 <br/>
 
-| ![Angular] | {{playground.ng.action}} |
+| [![Angular][angular-badge]]({{playground.ng.url}}) | {{playground.ng.action}} |
 | :--- | ---: |
 > {{playground.ng.url}}
 > {{playground.ng.author}}
 > {{playground.ng.contributor}}
 <br/>
 
-| ![TypeScript] | {{playground.tsc.action}} |
+| [![TypeScript][typescript-badge]]({{playground.tsc.url}}) | {{playground.tsc.action}} |
 | :--- | ---: |
 > {{playground.tsc.url}}
 > {{playground.tsc.author}}
 > {{playground.tsc.contributor}}
 <br/>
 
-| ![Vue] | {{playground.vue.action}} |
+| [![Vue][vue-badge]]({{playground.vue.url}}) | {{playground.vue.action}} |
 | :--- | ---: |
 > {{playground.vue.url}}
 > {{playground.vue.author}}
 > {{playground.vue.contributor}}
 <br/>
 
-| ![React] | {{playground.react.action}} |
+| [![React][react-badge]]({{playground.react.url}}) | {{playground.react.action}} |
 | :--- | ---: |
 > {{playground.react.url}}
 > {{playground.react.author}}
 > {{playground.react.contributor}}
 <br/>
 
-| ![Svelte] | {{playground.svelte.action}} |
+| [![Svelte][svelte-badge]]({{playground.svelte.url}}) | {{playground.svelte.action}} |
 | :--- | ---: |
 > {{playground.svelte.url}}
 > {{playground.svelte.author}}

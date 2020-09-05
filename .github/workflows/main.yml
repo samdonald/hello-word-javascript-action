@@ -19,7 +19,6 @@ jobs:
       - name: Project Submission
         id: project
         uses: ./.github/action
-        run: echo outputs.status
       - name: Build README
         id: readme
         if: 1 + 1 == 2

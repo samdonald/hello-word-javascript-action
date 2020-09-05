@@ -47,11 +47,11 @@ const core = require("@actions/core");
                 ? `> ${playground.url}` 
                 : `> This project has no _${playground.flavour}_ playground.`
             case `{{playground.${flavour}.author}}`:
-              const login = playground.author.login;
-              const url = `https://github.com/${login}`;
+              const authorLogin = playground.author.login;
+              const url = `https://github.com/${authorLogin}`;
               const date = playground.author.date;
               return playground.author 
-                ? `> - Authored by [@${login}](${url}) on _${date}_.` 
+                ? `> - Authored by [@${authorLogin}](${url}) on _${date}_.` 
                 : "";
             case `{{playground.${flavour}.contributor}}`:
               const login = playground.contributor.login;

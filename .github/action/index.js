@@ -263,7 +263,7 @@ async function buildProjectYml(data) {
     });
     console.log(yml);
     return yml;
-  } catch(error) {
-    console.log(errro);
+  } catch(e) {
+    console.log(e);
   }
 }

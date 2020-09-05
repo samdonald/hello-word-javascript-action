@@ -123,8 +123,8 @@ async function projectSubmission() {
         });
         const directory = await fs.promises.mkdir(directoryPath);
         const file = await fs.promises.writeFile(filePath, projectYAML)
-        core.saveState("README", "ready");
-        core.saveState("PROJECT", title);
+        core.setOutput("status", "ready")
+        core.setOutput("project", title);
         return;
       }
     } else {

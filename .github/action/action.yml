@@ -3,6 +3,8 @@ description: 'Greet someone and record the time'
 outputs:
   status:
     description: "Is the project ready to build and push to master."
+  project:
+    description: "The title of the project. It's also the projects directory name."
 runs:
   using: 'node12'
   main: 'index.js'

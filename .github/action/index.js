@@ -244,7 +244,7 @@ async function buildProjectYml(data) {
         author: playgrounds && playgrounds[name] ? author : null,
         contributor: null
     });
-    console.log(data.plagrounds, data.playgrounds["js"])
+    console.log(data.playgrounds, data.playgrounds["js"])
     const yml = yaml.safeDump({
       issue: github.context.payload.issue.number,
       ios: data.ios,
@@ -254,12 +254,12 @@ async function buildProjectYml(data) {
       description: data.description,
       resources: data.resources,
       playgrounds: {
-        js: buildPlayground("js")(data.plagrounds),
-        ng: buildPlayground("ng")(data.plagrounds),
-        tsc: buildPlayground("tsc")(data.plagrounds),
-        vue: buildPlayground("vue")(data.plagrounds),
-        react: buildPlayground("react")(data.plagrounds),
-        svelte: buildPlayground("svelte")(data.plagrounds),
+        js: buildPlayground("js")(data.playgrounds),
+        ng: buildPlayground("ng")(data.playgrounds),
+        tsc: buildPlayground("tsc")(data.playgrounds),
+        vue: buildPlayground("vue")(data.playgrounds),
+        react: buildPlayground("react")(data.playgrounds),
+        svelte: buildPlayground("svelte")(data.playgrounds),
       }
     });
     console.log(yml);

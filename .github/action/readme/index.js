@@ -49,15 +49,15 @@ const core = require("@actions/core");
               return setProjectAction(data.title)(action)(type);
             case `{{playground.${flavour}.url}}`:
               return playground.url 
-                ? `> ${playground.url}` 
-                : `> This project has no _${playground.flavour}_ playground.`
+                ? `${playground.url}` 
+                : `This project has no _${playground.flavour}_ playground.`
             case `{{playground.${flavour}.author}}`:
               return playground.author
-                ? `> - Authored by ${userOnDate(playground.author)}`
+                ? `- Authored by ${userOnDate(playground.author)}`
                 : "";
             case `{{playground.${flavour}.contributor}}`:
               return playground.contributor 
-                ? `> - Last contribution by ${userOnDate(playground.contributor)}.` 
+                ? `- Last contribution by ${userOnDate(playground.contributor)}.` 
                 : "";
           }
       }

@@ -254,8 +254,8 @@ async function buildProjectYml(data) {
       resources: data.resources,
       playgrounds: {
         js: {
-          url: playgrounds.js,
-          author: playground.js ? author : null,
+          url: data.playgrounds.js,
+          author: data.playground.js ? author : null,
           contributor: null
         }
       }

@@ -34,36 +34,36 @@ const core = require("@actions/core");
           return data.resources;
         default:
           // match must be of 'playground.flavour?action/author/contributor'
-          // const index = match.indexOf(".");
-          // const lastIndex = match.lastIndexOf(".");
-          // const flavour = match.substring(index + 1, lastIndex);
-          // const playground = data.playgrounds[flavour];
-          // let login, url, date;
+          const index = match.indexOf(".");
+          const lastIndex = match.lastIndexOf(".");
+          const flavour = match.substring(index + 1, lastIndex);
+          const playground = data.playgrounds[flavour];
+          let login, url, date;
 
-          // switch (match) {
-          //   case `{{playground.${flavour}.action}}`:
-          //     const action = playground.url ? "update" : "add";
-          //     const type = playground.flavour.toLowerCase();
-          //     return setProjectAction(data.title)(action)(type);
-          //   case `{{playground.${flavour}.url}}`:
-          //     return playground.url 
-          //       ? `> ${playground.url}` 
-          //       : `> This project has no _${playground.flavour}_ playground.`
-          //   case `{{playground.${flavour}.author}}`:
-          //     login = playground.author.login;
-          //     url = `https://github.com/${login}`;
-          //     date = playground.author.date;
-          //     return playground.author 
-          //       ? `> - Authored by [@${login}](${url}) on _${date}_.` 
-          //       : "";
-          //   case `{{playground.${flavour}.contributor}}`:
-          //     login = playground.contributor.login;
-          //     url = `https://github.com/${login}`;
-          //     date = playground.contributor.date;
-          //     return playground.contributor 
-          //       ? `> - Last contribution by [@${login}](${url}) on _${date}_.` 
-          //       : "";
-          // }
+          switch (match) {
+            case `{{playground.${flavour}.action}}`:
+              const action = playground.url ? "update" : "add";
+              const type = playground.flavour.toLowerCase();
+              return setProjectAction(data.title)(action)(type);
+            case `{{playground.${flavour}.url}}`:
+              return playground.url 
+                ? `> ${playground.url}` 
+                : `> This project has no _${playground.flavour}_ playground.`
+            case `{{playground.${flavour}.author}}`:
+              login = playground.author.login;
+              url = `https://github.com/${login}`;
+              date = playground.author.date;
+              return playground.author 
+                ? `> - Authored by [@${login}](${url}) on _${date}_.` 
+                : "";
+            case `{{playground.${flavour}.contributor}}`:
+              login = playground.contributor.login;
+              url = `https://github.com/${login}`;
+              date = playground.contributor.date;
+              return playground.contributor 
+                ? `> - Last contribution by [@${login}](${url}) on _${date}_.` 
+                : "";
+          }
       }
     });
 

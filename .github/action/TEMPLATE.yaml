@@ -2,10 +2,10 @@ issue:
 ios:
 android:
 title:
-author: 
+author: &author
   id: 
   login: 
-  avatar: 
+  avatar:
   url: 
   date:
 description: 
@@ -14,78 +14,60 @@ playgrounds:
   js:
     flavour: "JavaScript"
     url:
-    author:
-      id:
-      login:
-      url:
-      date:
+    author: *author
     contributor:
       id:
       login:
+      avatar:
       url:
       date:
   ng:
     flavour: "Angular"
     url:
-    author:
-      id:
-      login:
-      url:
-      date:
+    author: *author
     contributor:
       id:
       login:
+      avatar:
       url:
       date:
   tsc:
     flavour: "TypeScript"
     url:
-    author:
-      id:
-      login:
-      url:
-      date:
+    author: *author
     contributor:
       id:
       login:
+      avatar:
       url:
       date:
   vue:
     flavour: "Vue"
     url:
-    author:
-      id:
-      login:
-      url:
-      date:
+    author: *author
     contributor:
       id:
       login:
+      avatar:
       url:
       date:
   react:
     flavour: "React"
     url:
-    author:
-      id:
-      login:
-      url:
-      date:
+    author: *author
     contributor:
       id:
       login:
+      avatar:
       url:
       date:
   svelte:
     flavour: "Svelte"
     url:
-    author:
-      id:
-      login:
-      url:
-      date:
+    author: *author
     contributor:
       id:
       login:
+      avatar:
       url:
       date:

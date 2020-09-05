@@ -118,7 +118,7 @@ async function projectSubmission() {
       
       // all minimum requirements in place
       if (title && description && playgrounds && (ios + android)) {
-        buildProjectYml({title,ios,android,description,resources,plagrounds});
+        buildProjectYml({title,ios,android,description,resources,playgrounds});
         return;
         const directoryPath = `projects/${title}`;
         const filePath = `projects/${title}/README.md`;

@@ -257,6 +257,11 @@ async function buildProjectYml(data) {
           url: data.playgrounds.js,
           author: data.playgrounds.js ? author : null,
           contributor: null
+        },
+        ng: {
+          url: data.playgrounds.ng,
+          author: data.playgrounds.ng ? author : null,
+          contributor: null
         }
       }
     });

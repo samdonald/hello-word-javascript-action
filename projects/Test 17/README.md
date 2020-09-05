@@ -45,8 +45,8 @@ Reference any related resources here. These could include;
 | ![JavaScript] | [update](https://github.com/mudlabs/hello-word=javascript-action/issues/new/?title=[update][javascript]%20Test+17&body=%3C%21%2D%2D+Just+past+your+playground+link+below+and+press+Submit+%2D%2D%3E) |
 | :--- | ---: |
 > https://play.nativescript.org/?template=play-js&id=yudyse&v=2
-> - Authored by [@mudlabs](https://github.com/mudlabs) on _Sep 5, 2020_.
-> undefined
+> - Authored by [<img src="https://avatars3.githubusercontent.com/u/32623552?s=60&amp;v=4" align="center" width="21"> @mudlabs](https://github.com/mudlabs) on _Sep 5, 2020_.
+> - Last contribution by [<img src="https://avatars3.githubusercontent.com/u/7357344?s=60&amp;v=4" align="center" width="21"> @samdonald](https://github.com/samdonald) on _Sep 23, 2020_.
 <br/>
 
 | ![Angular] | [add](https://github.com/mudlabs/hello-word=javascript-action/issues/new/?title=[add][angular]%20Test+17&body=%3C%21%2D%2D+Just+past+your+playground+link+below+and+press+Submit+%2D%2D%3E) |

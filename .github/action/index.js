@@ -101,7 +101,7 @@ async function projectSubmission() {
   try {
     const body = utils.stripComments(github.context.payload.issue.body);
     const title = extractTitle(body);
-    buildProjectData();return;
+    buildProjectData({titls, ios:true,android:false,description:"This is my description", resources: null});return;
     if (!fs.existsSync(`projects/${title}`)) {
       const description = extractDescription(body);
       const resources = extractResources(body);
@@ -228,28 +228,28 @@ async function projectSubmission() {
   }
 }
 
-async function buildProjectData() {
+async function buildProjectData(datum) {
   const data = yaml.safeDump({
     issue: github.context.payload.issue.number,
-    ios: false,
-    android: true,
-    title: "My Project",
+    ios: datum.ios,
+    android: datum.android,
+    title: datum.title,
     author: {
-      id: "jsdfjhsdfosf",
-      login: "mudlabs",
-      avatar: "https://jsdnfjlsdnf",
-      url: "",
-      date: "3 Sep, 2020"
+      id: github.context.payload.sender.id,
+      login: github.context.payload.sender.login,
+      avatar: github.context.payload.sender.avatar_url,
+      url: github.context.payload.sender.html_url,
+      date: getDateString(github.context.payload.issue.created_at)
     },
-    description: "",
-    resources: "",
+    description: datum.description,
+    resources: datum.resources,
     playgrounds: {
-      js: {},
-      ng: {},
-      tsc: {},
-      vue: {},
-      react: {},
-      svelte: {}
+      js: {},//buildPlayground("js"),
+      ng: {},//buildPlayground("ng"),
+      tsc: {},//buildPlayground("tsc"),
+      vue: {},//buildPlayground("vue"),
+      react: {},//buildPlayground("react"),
+      svelte: {},//buildPlayground("svelte")
     }
   });
   console.log(data);

@@ -21,7 +21,7 @@ jobs:
         uses: ./.github/action
       - name: Build README
         id: readme
-        if: startsWith(process.env.STATE_README, 'ready')
+        if: startsWith(env.STATE_README, 'ready')
         uses: ./.github/action/readme
       - name: Add & Commit
         # if: there's a new project file to add to the remote repo master branch

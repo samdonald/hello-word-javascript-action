@@ -232,21 +232,6 @@ async function projectSubmission() {
 
 async function buildProjectYml(data) {
   try {
-    console.log(
-      yaml.safeDump({
-        "issue": 3,
-        "&author author": {
-          "id": 4,
-          "name": "mudlabs"
-        },
-        "projects": {
-          "js": {
-            "author": "*author"
-          }
-        }
-      })
-    );
-    return;
     const author = {
       id: github.context.payload.sender.id,
         login: github.context.payload.sender.login,
@@ -268,12 +253,11 @@ async function buildProjectYml(data) {
       description: data.description,
       resources: data.resources,
       playgrounds: {
-        js: buildPlayground("js")(data.plagrounds),
-        ng: buildPlayground("ng")(data.playgrounds),
-        tsc: buildPlayground("tsc")(data.playgrounds),
-        vue: buildPlayground("vue")(data.playgrounds),
-        react: buildPlayground("react")(data.playgrounds),
-        svelte: buildPlayground("svelte")(data.playgrounds)
+        js: {
+          url: playgrounds.js,
+          author: playground.js ? author : null,
+          contributor: null
+        }
       }
     });
     console.log(yml);

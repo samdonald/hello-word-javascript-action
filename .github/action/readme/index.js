@@ -30,7 +30,7 @@ const core = require("@actions/core");
         case "{{resources}}":
           return data.resources;
         default:
-          match must be of 'playground.flavour?action/author/contributor'
+          // match must be of 'playground.flavour?action/author/contributor'
           const index = match.indexOf(".");
           const lastIndex = match.lastIndexOf(".");
           const flavour = match.substring(index + 1, lastIndex);

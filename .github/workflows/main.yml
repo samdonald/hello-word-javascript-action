@@ -29,7 +29,7 @@ jobs:
         uses: EndBug/add-and-commit@v4.4.0
         with:
           author_name: ${{github.context.payload.login}} 
-          author_email: ${{github.context.payload.sender.id + "+" + github.context.payload.login + "@users.noreply.github.com"}}
+          author_email: ${{ format("{0}+{1}@users.noreply.github.com", github.context.payload.sender.id, github.context.payload.sender.login) }}
           message: 'New project added'
           
 

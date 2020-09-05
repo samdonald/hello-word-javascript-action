@@ -232,8 +232,8 @@ async function projectSubmission() {
 
 async function buildProjectYml(data) {
   const buildPlayground = name => playgrounds => ({
-      url: playgrounds[name],
-      author: playgrounds[name] ? {
+      url: playgrounds ? playgrounds[name] : null,
+      author: playgrounds && playgrounds[name] ? {
         id: github.context.payload.sender.id,
         login: github.context.payload.sender.login,
         avatar: github.context.payload.sender.avatar_url,

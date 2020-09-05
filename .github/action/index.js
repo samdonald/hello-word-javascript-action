@@ -101,7 +101,7 @@ async function projectSubmission() {
   try {
     const body = utils.stripComments(github.context.payload.issue.body);
     const title = extractTitle(body);
-    buildProjectData({title, ios:true,android:false,description:"This is my description", resources: null});return;
+
     if (!fs.existsSync(`projects/${title}`)) {
       const description = extractDescription(body);
       const resources = extractResources(body);
@@ -118,6 +118,8 @@ async function projectSubmission() {
       
       // all minimum requirements in place
       if (title && description && playgrounds && (ios + android)) {
+        buildProjectYml({title,ios,android,description,resources,plagrounds});
+        return;
         const directoryPath = `projects/${title}`;
         const filePath = `projects/${title}/README.md`;
         const file = await fs.promises.readFile(yamlPath, {encoding: "utf-8"});
@@ -228,12 +230,23 @@ async function projectSubmission() {
   }
 }
 
-async function buildProjectData(datum) {
-  const data = yaml.safeDump({
+async function buildProjectYml(data) {
+  const buildPlayground = name => playgrounds => ({
+      url: playgrounds[name],
+      author: playgrounds[name] ? {
+        id: github.context.payload.sender.id,
+        login: github.context.payload.sender.login,
+        avatar: github.context.payload.sender.avatar_url,
+        url: github.context.payload.sender.html_url,
+        date: getDateString(github.context.payload.issue.created_at)
+      } : null,
+      contributor: null
+  });
+  const yml = yaml.safeDump({
     issue: github.context.payload.issue.number,
-    ios: datum.ios,
-    android: datum.android,
-    title: datum.title,
+    ios: data.ios,
+    android: data.android,
+    title: data.title,
     author: {
       id: github.context.payload.sender.id,
       login: github.context.payload.sender.login,
@@ -241,17 +254,17 @@ async function buildProjectData(datum) {
       url: github.context.payload.sender.html_url,
       date: getDateString(github.context.payload.issue.created_at)
     },
-    description: datum.description,
-    resources: datum.resources,
+    description: data.description,
+    resources: data.resources,
     playgrounds: {
-      js: {},//buildPlayground("js"),
-      ng: {},//buildPlayground("ng"),
-      tsc: {},//buildPlayground("tsc"),
-      vue: {},//buildPlayground("vue"),
-      react: {},//buildPlayground("react"),
-      svelte: {},//buildPlayground("svelte")
+      js: buildPlayground("js")(data.plagrounds),
+      ng: buildPlayground("ng")(data.playgrounds),
+      tsc: buildPlayground("tsc")(data.playgrounds),
+      vue: buildPlayground("vue")(data.playgrounds),
+      react: buildPlayground("react")(data.playgrounds),
+      svelte: buildPlayground("svelte")(data.playgrounds)
     }
   });
-  console.log(data);
-  return;
+  console.log(yml);
+  return yml;
 }

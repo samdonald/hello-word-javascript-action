@@ -21,7 +21,7 @@ jobs:
         uses: ./.github/action
       - name: Build README
         id: readme
-        if: 1 + 1 == 2
+        if: startsWith(steps.project.outputs.status, 'ready')
         uses: ./.github/action/readme
       - name: Add & Commit
         # if: there's a new project file to add to the remote repo master branch

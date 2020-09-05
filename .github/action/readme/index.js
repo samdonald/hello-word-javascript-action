@@ -15,6 +15,7 @@ const core = require("@actions/core");
       "./.github/action/TEMPLATE.md",
       { encoding: "utf-8", flag: "r" }
     );
+    console.log(data);
   
     const readme = template.replace(/\{\{(?:[a-z]|\.)+\}\}/g, match => {
       switch (match) {
@@ -33,7 +34,6 @@ const core = require("@actions/core");
           const index = match.indexOf(".");
           const lastIndex = match.lastIndexOf(".");
           const flavour = match.substring(index + 1, lastIndex);
-          console.log(flavour, data.playgrounds, data.playgrounds[flavour]);
           const playground = data.playgrounds[flavour];
           let login, url, date;
 

@@ -32,9 +32,8 @@ const core = require("@actions/core");
           // match must be of 'playground.flavour?action/author/contributor'
           const index = match.indexOf(".");
           const lastIndex = match.lastIndexOf(".");
-          const same = index === lastIndex;
-          const close = match.indexOf("}}");
-          const flavour = match.substring(index + 1, same ? close : lastIndex);
+          const flavour = match.substring(index + 1, lastIndex);
+          console.log(flavour, data.playgrounds, data.playgrounds[flavour]);
           const playground = data.playgrounds[flavour];
           let login, url, date;
 

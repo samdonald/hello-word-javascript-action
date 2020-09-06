@@ -10,6 +10,7 @@
 
 <!-- Platform Support (i.e. ![ios]) -->
 ![iOS]
+![Android]
 
 
 

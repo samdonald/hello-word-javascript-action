@@ -15,7 +15,7 @@ const { stringify } = require("querystring");
       const usercontent = "https://avatars3.githubusercontent.com/u";
       const avatar = `${usercontent}/${user.id}?s=60&v=4`;
       const img = `<img src="${avatar}" width="21" align="center"/>`;
-      return `[${img} @${user.login}](https://github.com/${user.login}) on _${user.date}_.`;
+      return `[${img} @${user.login}](https://github.com/${user.login}) on _${user.date}_`;
     };
 
     const directory = process.env.TITLE;
@@ -62,12 +62,12 @@ const { stringify } = require("querystring");
               break;
             case `{{playground.${flavour}.author}}`:
               replacement = playground.author
-                ? `- Authored by John`
+                ? `- Authored by ${userOnDate(playground.author)}.`
                 : "";
               break;
             case `{{playground.${flavour}.contributor}}`:
               replacement = playground.contributor
-                ? `- Last contribution by Steve`
+                ? `- Last contribution by ${userOnDate(playground.contributor)}.`
                 : "";
               break;
           }

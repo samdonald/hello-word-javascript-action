@@ -26,7 +26,7 @@ const github = require("@actions/github");
     const data = yaml.safeLoad(file);
     
     
-    console.log(data);
+    console.log(data.playgrounds);
   
     const readme = template.replace(/\{\{(?:[a-z]|\.)+\}\}/g, match => {
       switch (match) {

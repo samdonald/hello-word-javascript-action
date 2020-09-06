@@ -68,7 +68,7 @@ const github = require("@actions/github");
       }
     });
 
-    await fs.promises.writeFile(`projects/Test 17/README.md`, readme); 
+    await fs.promises.writeFile(`projects/${directory}/README.md`, readme); 
   } catch (error) {
     console.log(error);
   }

@@ -2,7 +2,7 @@
 name: Test
 about: test frontmatter
 title: ''
-labels: test, duplicate
+labels: bug, duplicate
 assignees: ''
 
 ---

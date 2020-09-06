@@ -18,7 +18,7 @@ const github = require("@actions/github");
     };
 
     const directory = process.env.TITLE;
-    const file = await fs.promises.readFile("projects/${directory}/data.yaml");
+    const file = await fs.promises.readFile(`projects/${directory}/data.yaml`);
     const template = await fs.promises.readFile(
       "./.github/action/TEMPLATE.md",
       { encoding: "utf-8", flag: "r" }

@@ -1,6 +1,7 @@
 const fs = require("fs");
 const yaml = require("js-yaml");
 const github = require("@actions/github");
+const { stringify } = require("querystring");
 
 (async function(){
   try { 
@@ -42,6 +43,7 @@ const github = require("@actions/github");
           return data.resources;
         default:
           // match must be of 'playground.flavour?action/author/contributor'
+          let replacement = "";
           const index = match.indexOf(".");
           const lastIndex = match.lastIndexOf(".");
           const flavour = match.substring(index + 1, lastIndex);
@@ -51,20 +53,26 @@ const github = require("@actions/github");
             case `{{playground.${flavour}.action}}`:
               const action = playground.url ? "update" : "add";
               const type = playground.flavour.toLowerCase();
-              return setProjectAction(data.title)(action)(type);
+              replacement = setProjectAction(data.title)(action)(type);
+              break;
             case `{{playground.${flavour}.url}}`:
-              return playground.url 
+              replacement = playground.url 
                 ? `${playground.url}` 
-                : `This project has no _${playground.flavour}_ playground.`
+                : `This project has no _${playground.flavour}_ playground.`;
+              break;
             case `{{playground.${flavour}.author}}`:
-              return playground.author
+              replacement = playground.author
                 ? `- Authored by John`
                 : "";
+              break;
             case `{{playground.${flavour}.contributor}}`:
-              return playground.contributor 
-                ? `- Last contribution by Steve` 
+              replacement = playground.contributor
+                ? `- Last contribution by Steve`
                 : "";
+              break;
           }
+
+          return replacement;
       }
     });
 

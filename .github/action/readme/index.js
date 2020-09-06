@@ -17,8 +17,8 @@ const github = require("@actions/github");
       return `[${img} @${user.login}](https://github.com/${user.login}) on _${user.date}_.`;
     };
 
-    const projectDirectory = "Test 17"; // need to get this from variable
-    const file = await fs.promises.readFile("projects/Test 17/data.yaml");
+    const directory = process.env.TITLE;
+    const file = await fs.promises.readFile("projects/${directory}/data.yaml");
     const template = await fs.promises.readFile(
       "./.github/action/TEMPLATE.md",
       { encoding: "utf-8", flag: "r" }

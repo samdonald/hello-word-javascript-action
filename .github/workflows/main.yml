@@ -23,6 +23,8 @@ jobs:
         id: readme
         if: startsWith(steps.project.outputs.status, 'ready')
         uses: ./.github/action/readme
+        env:
+          TITLE: ${{ steps.project.outputs.project }}
       - name: Add & Commit
         # if: there's a new project file to add to the remote repo master branch
         # See https://github.com/marketplace/actions/add-commit for details

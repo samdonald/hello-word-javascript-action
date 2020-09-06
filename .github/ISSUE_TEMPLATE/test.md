@@ -1,8 +1,8 @@
 ---
-name: Bug report
-about: Create a report to help us improve
+name: Test
+about: test frontmatter
 title: ''
-labels: bug, duplicate
+labels: test, duplicate
 assignees: ''
 
 ---

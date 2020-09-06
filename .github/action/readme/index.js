@@ -6,15 +6,17 @@ const { stringify } = require("querystring");
 (async function(){
   try { 
     const setProjectAction = project => action => type => {
+      let url = "";
       const title = project.replace(/( )/g, "+");
       const repo = github.context.payload.repository.html_url;
-      const start = `[${action}](${repo}/issues/new/?title=[${action}][${type}] ${title}`;
 
       if (action === "add") {
-        return encodeURIComponent(`[${action}](${repo}/issues/new/?title=[${action}][${type}] ${title}&body=<!-- Please past your ${type} playground link below and press Submit -->)`)
+        url = encodeURIComponent(`${repo}/issues/new/?title=[${action}][${type}] ${title}&body=<!-- Please past your ${type} playground link below and press Submit -->`)
       } else {
-        return encodeURIComponent(`[${action}](${repo}/issues/new/?title=[${action}][${type}] ${title}&body=<!-- Please past your updated ${type} playground link below -->\r\n## Playground\r\n\r\n<-- Please provide a short detailed reason for the update/change -->\r\n## Reason\r\n)`);
+        url = encodeURIComponent(`${repo}/issues/new/?title=[${action}][${type}] ${title}&body=<!-- Please past your updated ${type} playground link below -->\r\n## Playground\r\n\r\n<-- Please provide a short detailed reason for the update/change -->\r\n## Reason\r\n`);
       }
+
+      return `[${action}](${url})`;
     };
 
     const userOnDate = user => {

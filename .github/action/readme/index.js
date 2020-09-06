@@ -6,7 +6,6 @@ const { stringify } = require("querystring");
 (async function(){
   try { 
     const setProjectAction = project => action => type => {
-      let template;
       const repo = github.context.payload.repository.html_url;
       const title = encodeURIComponent(`[${action}][${type}] ${project}`);
       const template = action === "add" ? "add.md" : "update.md";

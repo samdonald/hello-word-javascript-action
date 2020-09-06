@@ -58,11 +58,11 @@ const github = require("@actions/github");
                 : `This project has no _${playground.flavour}_ playground.`
             case `{{playground.${flavour}.author}}`:
               return playground.author
-                ? `- Authored by ${userOnDate(playground.author)}`
+                ? `- Authored by John`
                 : "";
             case `{{playground.${flavour}.contributor}}`:
               return playground.contributor 
-                ? `- Last contribution by ${userOnDate(playground.contributor)}` 
+                ? `- Last contribution by Steve` 
                 : "";
           }
       }

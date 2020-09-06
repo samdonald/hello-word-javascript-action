@@ -41,42 +41,42 @@ Reference any related resources here. These could include;
 <!-- Playground Tables -->
 ### Playgrounds
 
-| [![JavaScript][javascript-badge]]({{playground.js.url}}) | {{playground.js.action}} |
+| [![JavaScript][javascript-badge]]({{playground.js.badge}}) | {{playground.js.action}} |
 | :--- | ---: |
 > {{playground.js.url}}
 > {{playground.js.author}}
 > {{playground.js.contribution}}
 <br/>
 
-| [![Angular][angular-badge]]({{playground.ng.url}}) | {{playground.ng.action}} |
+| [![Angular][angular-badge]]({{playground.ng.badge}}) | {{playground.ng.action}} |
 | :--- | ---: |
 > {{playground.ng.url}}
 > {{playground.ng.author}}
 > {{playground.ng.contributor}}
 <br/>
 
-| [![TypeScript][typescript-badge]]({{playground.tsc.url}}) | {{playground.tsc.action}} |
+| [![TypeScript][typescript-badge]]({{playground.tsc.badge}}) | {{playground.tsc.action}} |
 | :--- | ---: |
 > {{playground.tsc.url}}
 > {{playground.tsc.author}}
 > {{playground.tsc.contributor}}
 <br/>
 
-| [![Vue][vue-badge]]({{playground.vue.url}}) | {{playground.vue.action}} |
+| [![Vue][vue-badge]]({{playground.vue.badge}}) | {{playground.vue.action}} |
 | :--- | ---: |
 > {{playground.vue.url}}
 > {{playground.vue.author}}
 > {{playground.vue.contributor}}
 <br/>
 
-| [![React][react-badge]]({{playground.react.url}}) | {{playground.react.action}} |
+| [![React][react-badge]]({{playground.react.badge}}) | {{playground.react.action}} |
 | :--- | ---: |
 > {{playground.react.url}}
 > {{playground.react.author}}
 > {{playground.react.contributor}}
 <br/>
 
-| [![Svelte][svelte-badge]]({{playground.svelte.url}}) | {{playground.svelte.action}} |
+| [![Svelte][svelte-badge]]({{playground.svelte.badge}}) | {{playground.svelte.action}} |
 | :--- | ---: |
 > {{playground.svelte.url}}
 > {{playground.svelte.author}}

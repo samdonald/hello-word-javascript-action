@@ -50,6 +50,9 @@ const { stringify } = require("querystring");
           const playground = data.playgrounds[flavour];
 
           switch (match) {
+            case `{{playground.${flavour}.badge}}`:
+              replacement = playground.url ? playground.url : "";
+              break;
             case `{{playground.${flavour}.action}}`:
               const action = playground.url ? "update" : "add";
               const type = playground.flavour.toLowerCase();

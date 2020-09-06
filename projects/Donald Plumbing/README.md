@@ -43,42 +43,42 @@ Reference any related resources here. These could include;
 <!-- Playground Tables -->
 ### Playgrounds
 
-| [![JavaScript][javascript-badge]](This project has no _JavaScript_ playground.) | [add](https://github.com/mudlabs/hello-word-javascript-action/issues/new/?title=[add][javascript]%20Donald+Plumbing&body=%3C%21%2D%2D+Just+past+your+playground+link+below+and+press+Submit+%2D%2D%3E) |
+| [![JavaScript][javascript-badge]]() | [add](https://github.com/mudlabs/hello-word-javascript-action/issues/new/?title=[add][javascript]%20Donald+Plumbing&body=%3C%21%2D%2D+Just+past+your+playground+link+below+and+press+Submit+%2D%2D%3E) |
 | :--- | ---: |
 > This project has no _JavaScript_ playground.
 > 
 > undefined
 <br/>
 
-| [![Angular][angular-badge]](This project has no _Angular_ playground.) | [add](https://github.com/mudlabs/hello-word-javascript-action/issues/new/?title=[add][angular]%20Donald+Plumbing&body=%3C%21%2D%2D+Just+past+your+playground+link+below+and+press+Submit+%2D%2D%3E) |
+| [![Angular][angular-badge]]() | [add](https://github.com/mudlabs/hello-word-javascript-action/issues/new/?title=[add][angular]%20Donald+Plumbing&body=%3C%21%2D%2D+Just+past+your+playground+link+below+and+press+Submit+%2D%2D%3E) |
 | :--- | ---: |
 > This project has no _Angular_ playground.
 > 
 > 
 <br/>
 
-| [![TypeScript][typescript-badge]](This project has no _TypeScript_ playground.) | [add](https://github.com/mudlabs/hello-word-javascript-action/issues/new/?title=[add][typescript]%20Donald+Plumbing&body=%3C%21%2D%2D+Just+past+your+playground+link+below+and+press+Submit+%2D%2D%3E) |
+| [![TypeScript][typescript-badge]]() | [add](https://github.com/mudlabs/hello-word-javascript-action/issues/new/?title=[add][typescript]%20Donald+Plumbing&body=%3C%21%2D%2D+Just+past+your+playground+link+below+and+press+Submit+%2D%2D%3E) |
 | :--- | ---: |
 > This project has no _TypeScript_ playground.
 > 
 > 
 <br/>
 
-| [![Vue][vue-badge]](This project has no _Vue_ playground.) | [add](https://github.com/mudlabs/hello-word-javascript-action/issues/new/?title=[add][vue]%20Donald+Plumbing&body=%3C%21%2D%2D+Just+past+your+playground+link+below+and+press+Submit+%2D%2D%3E) |
+| [![Vue][vue-badge]]() | [add](https://github.com/mudlabs/hello-word-javascript-action/issues/new/?title=[add][vue]%20Donald+Plumbing&body=%3C%21%2D%2D+Just+past+your+playground+link+below+and+press+Submit+%2D%2D%3E) |
 | :--- | ---: |
 > This project has no _Vue_ playground.
 > 
 > 
 <br/>
 
-| [![React][react-badge]](This project has no _React_ playground.) | [add](https://github.com/mudlabs/hello-word-javascript-action/issues/new/?title=[add][react]%20Donald+Plumbing&body=%3C%21%2D%2D+Just+past+your+playground+link+below+and+press+Submit+%2D%2D%3E) |
+| [![React][react-badge]]() | [add](https://github.com/mudlabs/hello-word-javascript-action/issues/new/?title=[add][react]%20Donald+Plumbing&body=%3C%21%2D%2D+Just+past+your+playground+link+below+and+press+Submit+%2D%2D%3E) |
 | :--- | ---: |
 > This project has no _React_ playground.
 > 
 > 
 <br/>
 
-| [![Svelte][svelte-badge]](This project has no _Svelte_ playground.) | [add](https://github.com/mudlabs/hello-word-javascript-action/issues/new/?title=[add][svelte]%20Donald+Plumbing&body=%3C%21%2D%2D+Just+past+your+playground+link+below+and+press+Submit+%2D%2D%3E) |
+| [![Svelte][svelte-badge]]() | [add](https://github.com/mudlabs/hello-word-javascript-action/issues/new/?title=[add][svelte]%20Donald+Plumbing&body=%3C%21%2D%2D+Just+past+your+playground+link+below+and+press+Submit+%2D%2D%3E) |
 | :--- | ---: |
 > This project has no _Svelte_ playground.
 > 
